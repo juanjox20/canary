@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Ripper Spectre")
 local monster = {}
 
 monster.description = "a ripper spectre"
-monster.experience = 3500
+monster.experience = 30000
 monster.outfit = {
 	lookType = 1122,
 	lookHead = 81,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Haunted Cellar, Buried Cathedral",
 }
 
-monster.health = 3800
-monster.maxHealth = 3800
+monster.health = 13800
+monster.maxHealth = 13800
 monster.race = "blood"
 monster.corpse = 30026
 monster.speed = 190
@@ -76,20 +76,14 @@ monster.voices = {
 }
 
 monster.loot = {
-	{ name = "platinum coin", chance = 100000, maxCount = 5 },
-	{ name = "great spirit potion", chance = 30910, maxCount = 2 },
-	{ name = "two handed sword", chance = 16500 },
+	{ name = "platinum coin", chance = 100000, maxCount = 15 },
+	{ name = "crystal coin", chance = 15910, maxCount = 5 },
 	{ name = "terra rod", chance = 4780 },
-	{ name = "silver brooch", chance = 15190 },
 	{ name = "emerald bangle", chance = 14740 },
 	{ name = "twin hooks", chance = 1170 },
 	{ name = "springsprout rod", chance = 1210 },
-	{ id = 30083, chance = 1890 }, -- green ectoplasm
-	{ name = "coral brooch", chance = 1330 },
-	{ name = "serpent sword", chance = 1950 },
-	{ name = "hexagonal ruby", chance = 800 },
+	{ name = "hexagonal ruby", chance = 15500 },
 	{ name = "assassin dagger", chance = 970 },
-	{ name = "spike sword", chance = 530 },
 	{ name = "wyvern fang", chance = 120 },
 }
 

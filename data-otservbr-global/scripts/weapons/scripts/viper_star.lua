@@ -2,7 +2,7 @@ local combat = Combat()
 combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE)
 combat:setParameter(COMBAT_PARAM_DISTANCEEFFECT, CONST_ANI_GREENSTAR)
 combat:setParameter(COMBAT_PARAM_BLOCKARMOR, true)
-combat:setFormula(COMBAT_FORMULA_SKILL, 0, 0, 1, 0)
+combat:setFormula(COMBAT_FORMULA_SKILL, 0, 0, 2, 0)
 
 local condition = Condition(CONDITION_POISON)
 condition:setParameter(CONDITION_PARAM_DELAYED, true)
@@ -29,7 +29,7 @@ function viperStar.onUseWeapon(player, variant)
 end
 
 viperStar:id(7366)
-viperStar:attack(28)
+viperStar:attack(31)
 viperStar:breakChance(9)
 viperStar:shootType(CONST_ANI_GREENSTAR)
 viperStar:maxHitChance(76)

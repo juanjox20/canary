@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Hellflayer")
 local monster = {}
 
 monster.description = "a hellflayer"
-monster.experience = 11720
+monster.experience = 37000
 monster.outfit = {
 	lookType = 856,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Grounds of Damnation, Grounds of Despair, Grounds of Destruction, Grounds of Fire, Grounds of Plague, Grounds of Undeath, Halls of Ascension and Hell Hub",
 }
 
-monster.health = 14000
-monster.maxHealth = 14000
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 22784
 monster.speed = 165
@@ -68,6 +68,10 @@ monster.flags = {
 monster.light = {
 	level = 0,
 	color = 0,
+}
+
+monster.events = {
+    "onDeath_randomItemDrops"
 }
 
 monster.voices = {

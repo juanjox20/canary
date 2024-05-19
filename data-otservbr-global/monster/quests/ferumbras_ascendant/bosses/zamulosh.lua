@@ -119,8 +119,6 @@ monster.defenses = {
 	armor = 30,
 	--	mitigation = ???,
 	{ name = "combat", interval = 2000, chance = 25, type = COMBAT_HEALING, minDamage = 220, maxDamage = 535, effect = CONST_ME_YELLOW_RINGS, target = false },
-	{ name = "zamulosh invisible", interval = 2000, chance = 25 },
-	{ name = "zamulosh tp", interval = 2000, chance = 15, target = false },
 }
 
 monster.elements = {
@@ -139,7 +137,7 @@ monster.elements = {
 monster.immunities = {
 	{ type = "paralyze", condition = true },
 	{ type = "outfit", condition = false },
-	{ type = "invisible", condition = true },
+	{ type = "invisible", condition = false },
 	{ type = "bleed", condition = false },
 }
 

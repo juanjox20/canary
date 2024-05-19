@@ -42,6 +42,7 @@
 #include "enums/account_coins.hpp"
 
 #include "creatures/players/highscore_category.hpp"
+#include "creatures/players/cast-system/cast_viewer.hpp"
 
 /*
  * NOTE: This namespace is used so that we can add functions without having to declare them in the ".hpp/.hpp" file
@@ -453,10 +454,45 @@ void ProtocolGame::AddItem(NetworkMessage &msg, std::shared_ptr<Item> item) {
 	}
 }
 
+ProtocolGame::LiveCastsMap ProtocolGame::liveCasts;
+
+void ProtocolGame::insertCaster() {
+	const auto &cast = liveCasts.find(player);
+	if (cast != liveCasts.end()) {
+		return;
+	}
+
+	liveCasts.insert(std::make_pair(player, this));
+}
+
+void ProtocolGame::removeCaster() {
+	for (const auto &it : getLiveCasts()) {
+		if (it.first == player) {
+			liveCasts.erase(player);
+			break;
+		}
+	}
+}
+
 void ProtocolGame::release() {
 	// dispatcher thread
-	if (player && player->client == shared_from_this()) {
-		player->client.reset();
+	if (player && player->client) {
+		if (!isCastViewerBool) {
+			if (player->client->isCastBroadcasting()) {
+				player->client->clear(true);
+			}
+
+			if (player->client->getCastOwner() == shared_from_this()) {
+				player->client->resetCastOwner();
+			}
+		} else if (player->client->isCastBroadcasting()) {
+			player->client->removeViewer(getThis());
+		}
+
+		if (player->hasClientOwner()) {
+			player->getClient().reset();
+		}
+
 		player = nullptr;
 	}
 
@@ -617,7 +653,7 @@ void ProtocolGame::login(const std::string &name, uint32_t accountId, OperatingS
 			return;
 		}
 
-		if (foundPlayer->client) {
+		if (foundPlayer->hasClientOwner()) {
 			foundPlayer->disconnect();
 			foundPlayer->isConnecting = true;
 
@@ -637,7 +673,7 @@ void ProtocolGame::connect(const std::string &playerName, OperatingSystem_t oper
 	eventConnect = 0;
 
 	std::shared_ptr<Player> foundPlayer = g_game().getPlayerUniqueLogin(playerName);
-	if (!foundPlayer) {
+	if (!foundPlayer || foundPlayer->hasClientOwner()) {
 		disconnectClient("You are already logged in.");
 		return;
 	}
@@ -656,7 +692,7 @@ void ProtocolGame::connect(const std::string &playerName, OperatingSystem_t oper
 	player->setOperatingSystem(operatingSystem);
 	player->isConnecting = false;
 
-	player->client = getThis();
+	player->client->setCastOwner(getThis());
 	player->openPlayerContainers();
 	sendAddCreature(player, player->getPosition(), 0, true);
 	player->lastIP = player->getIP();
@@ -667,6 +703,11 @@ void ProtocolGame::connect(const std::string &playerName, OperatingSystem_t oper
 
 void ProtocolGame::logout(bool displayEffect, bool forced) {
 	if (!player) {
+		return;
+	}
+
+	if (isCastViewerBool) {
+		disconnect();
 		return;
 	}
 
@@ -694,6 +735,8 @@ void ProtocolGame::logout(bool displayEffect, bool forced) {
 	}
 
 	sendSessionEndInformation(forced ? SESSION_END_FORCECLOSE : SESSION_END_LOGOUT);
+
+	player->client->clear(true);
 
 	g_game().removeCreature(player, true);
 }
@@ -768,7 +811,7 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage &msg) {
 	std::string characterName = msg.getString();
 
 	std::shared_ptr<Player> foundPlayer = g_game().getPlayerUniqueLogin(characterName);
-	if (foundPlayer && foundPlayer->client) {
+	if (foundPlayer && foundPlayer->getClient() && accountDescriptor != "@cast") {
 		if (foundPlayer->getProtocolVersion() != getVersion() && foundPlayer->isOldProtocol() != oldProtocol) {
 			disconnectClient(fmt::format("You are already logged in using protocol '{}'. Please log out from the other session to connect here.", foundPlayer->getProtocolVersion()));
 			return;
@@ -811,39 +854,43 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage &msg) {
 		return;
 	}
 
-	BanInfo banInfo;
-	if (IOBan::isIpBanned(getIP(), banInfo)) {
-		if (banInfo.reason.empty()) {
-			banInfo.reason = "(none)";
+	if (accountDescriptor != "@cast") {
+		BanInfo banInfo;
+		if (IOBan::isIpBanned(getIP(), banInfo)) {
+			if (banInfo.reason.empty()) {
+				banInfo.reason = "(none)";
+			}
+
+			ss.str(std::string());
+			ss << "Your IP has been banned until " << formatDateShort(banInfo.expiresAt) << " by " << banInfo.bannedBy << ".\n\nReason specified:\n"
+			   << banInfo.reason;
+			disconnectClient(ss.str());
+			return;
 		}
 
-		ss.str(std::string());
-		ss << "Your IP has been banned until " << formatDateShort(banInfo.expiresAt) << " by " << banInfo.bannedBy << ".\n\nReason specified:\n"
-		   << banInfo.reason;
-		disconnectClient(ss.str());
-		return;
-	}
+		uint32_t accountId;
+		if (!IOLoginData::gameWorldAuthentication(accountDescriptor, password, characterName, accountId, oldProtocol)) {
+			ss.str(std::string());
+			if (authType == "session") {
+				ss << "Your session has expired. Please log in again.";
+			} else { // authType == "password"
+				ss << "Your " << (oldProtocol ? "username" : "email") << " or password is not correct.";
+			}
 
-	uint32_t accountId;
-	if (!IOLoginData::gameWorldAuthentication(accountDescriptor, password, characterName, accountId, oldProtocol)) {
-		ss.str(std::string());
-		if (authType == "session") {
-			ss << "Your session has expired. Please log in again.";
-		} else { // authType == "password"
-			ss << "Your " << (oldProtocol ? "username" : "email") << " or password is not correct.";
+			auto output = OutputMessagePool::getOutputMessage();
+			output->addByte(0x14);
+			output->addString(ss.str(), "ProtocolGame::onRecvFirstMessage - ss.str()");
+			send(output);
+			g_dispatcher().scheduleEvent(
+				1000, [self = getThis()] { self->disconnect(); }, "ProtocolGame::disconnect"
+			);
+			return;
 		}
 
-		auto output = OutputMessagePool::getOutputMessage();
-		output->addByte(0x14);
-		output->addString(ss.str(), "ProtocolGame::onRecvFirstMessage - ss.str()");
-		send(output);
-		g_dispatcher().scheduleEvent(
-			1000, [self = getThis()] { self->disconnect(); }, "ProtocolGame::disconnect"
-		);
-		return;
+		g_dispatcher().addEvent([self = getThis(), characterName, accountId, operatingSystem] { self->login(characterName, accountId, operatingSystem); }, "ProtocolGame::login");
+	} else {
+		g_dispatcher().addEvent([self = getThis(), characterName, password] { self->castViewerLogin(characterName, password); }, "ProtocolGame::castViewerLogin");
 	}
-
-	g_dispatcher().addEvent([self = getThis(), characterName, accountId, operatingSystem] { self->login(characterName, accountId, operatingSystem); }, "ProtocolGame::login");
 }
 
 void ProtocolGame::onConnect() {
@@ -913,7 +960,7 @@ void ProtocolGame::parsePacket(NetworkMessage &msg) {
 	}
 
 	// Modules system
-	if (player && recvbyte != 0xD3) {
+	if (player && recvbyte != 0xD3 && !isCastViewerBool) {
 		g_modules().executeOnRecvbyte(player->getID(), msg, recvbyte);
 	}
 
@@ -977,382 +1024,409 @@ void ProtocolGame::parsePacketFromDispatcher(NetworkMessage msg, uint8_t recvbyt
 		return;
 	}
 
-	switch (recvbyte) {
-		case 0x14:
-			logout(true, false);
-			break;
-		case 0x1D:
-			g_game().playerReceivePingBack(player->getID());
-			break;
-		case 0x1E:
-			g_game().playerReceivePing(player->getID());
-			break;
-		case 0x2a:
-			parseCyclopediaMonsterTracker(msg);
-			break;
-		case 0x2B:
-			parsePartyAnalyzerAction(msg);
-			break;
-		case 0x2c:
-			parseLeaderFinderWindow(msg);
-			break;
-		case 0x2d:
-			parseMemberFinderWindow(msg);
-			break;
-		case 0x28:
-			parseStashWithdraw(msg);
-			break;
-		case 0x29:
-			parseRetrieveDepotSearch(msg);
-			break;
-		case 0x32:
-			parseExtendedOpcode(msg);
-			break; // otclient extended opcode
-		case 0x60:
-			parseInventoryImbuements(msg);
-			break;
-		case 0x61:
-			parseOpenWheel(msg);
-			break;
-		case 0x62:
-			parseSaveWheel(msg);
-			break;
-		case 0x64:
-			parseAutoWalk(msg);
-			break;
-		case 0x65:
-			g_game().playerMove(player->getID(), DIRECTION_NORTH);
-			break;
-		case 0x66:
-			g_game().playerMove(player->getID(), DIRECTION_EAST);
-			break;
-		case 0x67:
-			g_game().playerMove(player->getID(), DIRECTION_SOUTH);
-			break;
-		case 0x68:
-			g_game().playerMove(player->getID(), DIRECTION_WEST);
-			break;
-		case 0x69:
-			g_game().playerStopAutoWalk(player->getID());
-			break;
-		case 0x6A:
-			g_game().playerMove(player->getID(), DIRECTION_NORTHEAST);
-			break;
-		case 0x6B:
-			g_game().playerMove(player->getID(), DIRECTION_SOUTHEAST);
-			break;
-		case 0x6C:
-			g_game().playerMove(player->getID(), DIRECTION_SOUTHWEST);
-			break;
-		case 0x6D:
-			g_game().playerMove(player->getID(), DIRECTION_NORTHWEST);
-			break;
-		case 0x6F:
-			g_game().playerTurn(player->getID(), DIRECTION_NORTH);
-			break;
-		case 0x70:
-			g_game().playerTurn(player->getID(), DIRECTION_EAST);
-			break;
-		case 0x71:
-			g_game().playerTurn(player->getID(), DIRECTION_SOUTH);
-			break;
-		case 0x72:
-			g_game().playerTurn(player->getID(), DIRECTION_WEST);
-			break;
-		case 0x73:
-			parseTeleport(msg);
-			break;
-		case 0x77:
-			parseHotkeyEquip(msg);
-			break;
-		case 0x78:
-			parseThrow(msg);
-			break;
-		case 0x79:
-			parseLookInShop(msg);
-			break;
-		case 0x7A:
-			parsePlayerBuyOnShop(msg);
-			break;
-		case 0x7B:
-			parsePlayerSellOnShop(msg);
-			break;
-		case 0x7C:
-			g_game().playerCloseShop(player->getID());
-			break;
-		case 0x7D:
-			parseRequestTrade(msg);
-			break;
-		case 0x7E:
-			parseLookInTrade(msg);
-			break;
-		case 0x7F:
-			g_game().playerAcceptTrade(player->getID());
-			break;
-		case 0x80:
-			g_game().playerCloseTrade(player->getID());
-			break;
-		case 0x81:
-			parseFriendSystemAction(msg);
-			break;
-		case 0x82:
-			parseUseItem(msg);
-			break;
-		case 0x83:
-			parseUseItemEx(msg);
-			break;
-		case 0x84:
-			parseUseWithCreature(msg);
-			break;
-		case 0x85:
-			parseRotateItem(msg);
-			break;
-		case 0x86:
-			parseConfigureShowOffSocket(msg);
-			break;
-		case 0x87:
-			parseCloseContainer(msg);
-			break;
-		case 0x88:
-			parseUpArrowContainer(msg);
-			break;
-		case 0x89:
-			parseTextWindow(msg);
-			break;
-		case 0x8A:
-			parseHouseWindow(msg);
-			break;
-		case 0x8B:
-			parseWrapableItem(msg);
-			break;
-		case 0x8C:
-			parseLookAt(msg);
-			break;
-		case 0x8D:
-			parseLookInBattleList(msg);
-			break;
-		case 0x8E: /* join aggression */
-			break;
-		case 0x8F:
-			parseQuickLoot(msg);
-			break;
-		case 0x90:
-			parseLootContainer(msg);
-			break;
-		case 0x91:
-			parseQuickLootBlackWhitelist(msg);
-			break;
-		case 0x92:
-			parseOpenDepotSearch();
-			break;
-		case 0x93:
-			parseCloseDepotSearch();
-			break;
-		case 0x94:
-			parseDepotSearchItemRequest(msg);
-			break;
-		case 0x95:
-			parseOpenParentContainer(msg);
-			break;
-		case 0x96:
-			parseSay(msg);
-			break;
-		case 0x97:
-			g_game().playerRequestChannels(player->getID());
-			break;
-		case 0x98:
-			parseOpenChannel(msg);
-			break;
-		case 0x99:
-			parseCloseChannel(msg);
-			break;
-		case 0x9A:
-			parseOpenPrivateChannel(msg);
-			break;
-		case 0x9E:
-			g_game().playerCloseNpcChannel(player->getID());
-			break;
-		case 0x9F:
-			parseSetMonsterPodium(msg);
-			break;
-		case 0xA0:
-			parseFightModes(msg);
-			break;
-		case 0xA1:
-			parseAttack(msg);
-			break;
-		case 0xA2:
-			parseFollow(msg);
-			break;
-		case 0xA3:
-			parseInviteToParty(msg);
-			break;
-		case 0xA4:
-			parseJoinParty(msg);
-			break;
-		case 0xA5:
-			parseRevokePartyInvite(msg);
-			break;
-		case 0xA6:
-			parsePassPartyLeadership(msg);
-			break;
-		case 0xA7:
-			g_game().playerLeaveParty(player->getID());
-			break;
-		case 0xA8:
-			parseEnableSharedPartyExperience(msg);
-			break;
-		case 0xAA:
-			g_game().playerCreatePrivateChannel(player->getID());
-			break;
-		case 0xAB:
-			parseChannelInvite(msg);
-			break;
-		case 0xAC:
-			parseChannelExclude(msg);
-			break;
-		case 0xAE:
-			parseSendBosstiary();
-			break;
-		case 0xAF:
-			parseSendBosstiarySlots();
-			break;
-		case 0xB0:
-			parseBosstiarySlot(msg);
-			break;
-		case 0xB1:
-			parseHighscores(msg);
-			break;
-		case 0xBA:
-			parseTaskHuntingAction(msg);
-			break;
-		case 0xBE:
-			g_game().playerCancelAttackAndFollow(player->getID());
-			break;
-		case 0xBF:
-			parseForgeEnter(msg);
-			break;
-		case 0xC0:
-			parseForgeBrowseHistory(msg);
-			break;
-		case 0xC9: /* update tile */
-			break;
-		case 0xCA:
-			parseUpdateContainer(msg);
-			break;
-		case 0xCB:
-			parseBrowseField(msg);
-			break;
-		case 0xCC:
-			parseSeekInContainer(msg);
-			break;
-		case 0xCD:
-			parseInspectionObject(msg);
-			break;
-		case 0xD2:
-			g_game().playerRequestOutfit(player->getID());
-			break;
-		case 0xD3:
-			parseSetOutfit(msg);
-			break;
-		case 0xD4:
-			parseToggleMount(msg);
-			break;
-		case 0xD5:
-			parseApplyImbuement(msg);
-			break;
-		case 0xD6:
-			parseClearImbuement(msg);
-			break;
-		case 0xD7:
-			parseCloseImbuementWindow(msg);
-			break;
-		case 0xDC:
-			parseAddVip(msg);
-			break;
-		case 0xDD:
-			parseRemoveVip(msg);
-			break;
-		case 0xDE:
-			parseEditVip(msg);
-			break;
-		case 0xE1:
-			parseBestiarysendRaces();
-			break;
-		case 0xE2:
-			parseBestiarysendCreatures(msg);
-			break;
-		case 0xE3:
-			parseBestiarysendMonsterData(msg);
-			break;
-		case 0xE4:
-			parseSendBuyCharmRune(msg);
-			break;
-		case 0xE5:
-			parseCyclopediaCharacterInfo(msg);
-			break;
-		case 0xE6:
-			parseBugReport(msg);
-			break;
-		case 0xE7:
-			parseWheelGemAction(msg);
-			break;
-		case 0xE8:
-			parseDebugAssert(msg);
-			break;
-		case 0xEB:
-			parsePreyAction(msg);
-			break;
-		case 0xED:
-			parseSendResourceBalance();
-			break;
-		case 0xEE:
-			parseGreet(msg);
-			break;
-		// Premium coins transfer
-		// case 0xEF: parseCoinTransfer(msg); break;
-		case 0xF0:
-			g_game().playerShowQuestLog(player->getID());
-			break;
-		case 0xF1:
-			parseQuestLine(msg);
-			break;
-		// case 0xF2: parseRuleViolationReport(msg); break;
-		case 0xF3: /* get object info */
-			break;
-		case 0xF4:
-			parseMarketLeave();
-			break;
-		case 0xF5:
-			parseMarketBrowse(msg);
-			break;
-		case 0xF6:
-			parseMarketCreateOffer(msg);
-			break;
-		case 0xF7:
-			parseMarketCancelOffer(msg);
-			break;
-		case 0xF8:
-			parseMarketAcceptOffer(msg);
-			break;
-		case 0xF9:
-			parseModalWindowAnswer(msg);
-			break;
-		case 0xFF:
-			parseRewardChestCollect(msg);
-			break;
-			// case 0xFA: parseStoreOpen(msg); break;
-			// case 0xFB: parseStoreRequestOffers(msg); break;
-			// case 0xFC: parseStoreBuyOffer(msg) break;
-			// case 0xFD: parseStoreOpenTransactionHistory(msg); break;
-			// case 0xFE: parseStoreRequestTransactionHistory(msg); break;
+	if (isCastViewerBool) {
+		switch (recvbyte) {
+			case 0x14:
+				logout(true, false);
+				break;
+			case 0x1E:
+				g_game().playerReceivePing(player->getID());
+				break;
+			case 0x96:
+				parseSay(msg);
+				break;
+			case 0xCA:
+				parseUpdateContainer(msg);
+				break;
+			case 0xE8:
+				parseDebugAssert(msg);
+				break;
+			case 0xA1:
+				sendCancelTarget();
+				break;
+			default:
+				sendCancelWalk();
+				break;
+		}
+	} else {
+		switch (recvbyte) {
+			case 0x14:
+				logout(true, false);
+				break;
+			case 0x1D:
+				g_game().playerReceivePingBack(player->getID());
+				break;
+			case 0x1E:
+				g_game().playerReceivePing(player->getID());
+				break;
+			case 0x2a:
+				parseCyclopediaMonsterTracker(msg);
+				break;
+			case 0x2B:
+				parsePartyAnalyzerAction(msg);
+				break;
+			case 0x2c:
+				parseLeaderFinderWindow(msg);
+				break;
+			case 0x2d:
+				parseMemberFinderWindow(msg);
+				break;
+			case 0x28:
+				parseStashWithdraw(msg);
+				break;
+			case 0x29:
+				parseRetrieveDepotSearch(msg);
+				break;
+			case 0x32:
+				parseExtendedOpcode(msg);
+				break; // otclient extended opcode
+			case 0x60:
+				parseInventoryImbuements(msg);
+				break;
+			case 0x61:
+				parseOpenWheel(msg);
+				break;
+			case 0x62:
+				parseSaveWheel(msg);
+				break;
+			case 0x64:
+				parseAutoWalk(msg);
+				break;
+			case 0x65:
+				g_game().playerMove(player->getID(), DIRECTION_NORTH);
+				break;
+			case 0x66:
+				g_game().playerMove(player->getID(), DIRECTION_EAST);
+				break;
+			case 0x67:
+				g_game().playerMove(player->getID(), DIRECTION_SOUTH);
+				break;
+			case 0x68:
+				g_game().playerMove(player->getID(), DIRECTION_WEST);
+				break;
+			case 0x69:
+				g_game().playerStopAutoWalk(player->getID());
+				break;
+			case 0x6A:
+				g_game().playerMove(player->getID(), DIRECTION_NORTHEAST);
+				break;
+			case 0x6B:
+				g_game().playerMove(player->getID(), DIRECTION_SOUTHEAST);
+				break;
+			case 0x6C:
+				g_game().playerMove(player->getID(), DIRECTION_SOUTHWEST);
+				break;
+			case 0x6D:
+				g_game().playerMove(player->getID(), DIRECTION_NORTHWEST);
+				break;
+			case 0x6F:
+				g_game().playerTurn(player->getID(), DIRECTION_NORTH);
+				break;
+			case 0x70:
+				g_game().playerTurn(player->getID(), DIRECTION_EAST);
+				break;
+			case 0x71:
+				g_game().playerTurn(player->getID(), DIRECTION_SOUTH);
+				break;
+			case 0x72:
+				g_game().playerTurn(player->getID(), DIRECTION_WEST);
+				break;
+			case 0x73:
+				parseTeleport(msg);
+				break;
+			case 0x77:
+				parseHotkeyEquip(msg);
+				break;
+			case 0x78:
+				parseThrow(msg);
+				break;
+			case 0x79:
+				parseLookInShop(msg);
+				break;
+			case 0x7A:
+				parsePlayerBuyOnShop(msg);
+				break;
+			case 0x7B:
+				parsePlayerSellOnShop(msg);
+				break;
+			case 0x7C:
+				g_game().playerCloseShop(player->getID());
+				break;
+			case 0x7D:
+				parseRequestTrade(msg);
+				break;
+			case 0x7E:
+				parseLookInTrade(msg);
+				break;
+			case 0x7F:
+				g_game().playerAcceptTrade(player->getID());
+				break;
+			case 0x80:
+				g_game().playerCloseTrade(player->getID());
+				break;
+			case 0x81:
+				parseFriendSystemAction(msg);
+				break;
+			case 0x82:
+				parseUseItem(msg);
+				break;
+			case 0x83:
+				parseUseItemEx(msg);
+				break;
+			case 0x84:
+				parseUseWithCreature(msg);
+				break;
+			case 0x85:
+				parseRotateItem(msg);
+				break;
+			case 0x86:
+				parseConfigureShowOffSocket(msg);
+				break;
+			case 0x87:
+				parseCloseContainer(msg);
+				break;
+			case 0x88:
+				parseUpArrowContainer(msg);
+				break;
+			case 0x89:
+				parseTextWindow(msg);
+				break;
+			case 0x8A:
+				parseHouseWindow(msg);
+				break;
+			case 0x8B:
+				parseWrapableItem(msg);
+				break;
+			case 0x8C:
+				parseLookAt(msg);
+				break;
+			case 0x8D:
+				parseLookInBattleList(msg);
+				break;
+			case 0x8E: /* join aggression */
+				break;
+			case 0x8F:
+				parseQuickLoot(msg);
+				break;
+			case 0x90:
+				parseLootContainer(msg);
+				break;
+			case 0x91:
+				parseQuickLootBlackWhitelist(msg);
+				break;
+			case 0x92:
+				parseOpenDepotSearch();
+				break;
+			case 0x93:
+				parseCloseDepotSearch();
+				break;
+			case 0x94:
+				parseDepotSearchItemRequest(msg);
+				break;
+			case 0x95:
+				parseOpenParentContainer(msg);
+				break;
+			case 0x96:
+				parseSay(msg);
+				break;
+			case 0x97:
+				g_game().playerRequestChannels(player->getID());
+				break;
+			case 0x98:
+				parseOpenChannel(msg);
+				break;
+			case 0x99:
+				parseCloseChannel(msg);
+				break;
+			case 0x9A:
+				parseOpenPrivateChannel(msg);
+				break;
+			case 0x9E:
+				g_game().playerCloseNpcChannel(player->getID());
+				break;
+			case 0x9F:
+				parseSetMonsterPodium(msg);
+				break;
+			case 0xA0:
+				parseFightModes(msg);
+				break;
+			case 0xA1:
+				parseAttack(msg);
+				break;
+			case 0xA2:
+				parseFollow(msg);
+				break;
+			case 0xA3:
+				parseInviteToParty(msg);
+				break;
+			case 0xA4:
+				parseJoinParty(msg);
+				break;
+			case 0xA5:
+				parseRevokePartyInvite(msg);
+				break;
+			case 0xA6:
+				parsePassPartyLeadership(msg);
+				break;
+			case 0xA7:
+				g_game().playerLeaveParty(player->getID());
+				break;
+			case 0xA8:
+				parseEnableSharedPartyExperience(msg);
+				break;
+			case 0xAA:
+				g_game().playerCreatePrivateChannel(player->getID());
+				break;
+			case 0xAB:
+				parseChannelInvite(msg);
+				break;
+			case 0xAC:
+				parseChannelExclude(msg);
+				break;
+			case 0xAE:
+				parseSendBosstiary();
+				break;
+			case 0xAF:
+				parseSendBosstiarySlots();
+				break;
+			case 0xB0:
+				parseBosstiarySlot(msg);
+				break;
+			case 0xB1:
+				parseHighscores(msg);
+				break;
+			case 0xBA:
+				parseTaskHuntingAction(msg);
+				break;
+			case 0xBE:
+				g_game().playerCancelAttackAndFollow(player->getID());
+				break;
+			case 0xBF:
+				parseForgeEnter(msg);
+				break;
+			case 0xC0:
+				parseForgeBrowseHistory(msg);
+				break;
+			case 0xC9: /* update tile */
+				break;
+			case 0xCA:
+				parseUpdateContainer(msg);
+				break;
+			case 0xCB:
+				parseBrowseField(msg);
+				break;
+			case 0xCC:
+				parseSeekInContainer(msg);
+				break;
+			case 0xCD:
+				parseInspectionObject(msg);
+				break;
+			case 0xD2:
+				g_game().playerRequestOutfit(player->getID());
+				break;
+			case 0xD3:
+				parseSetOutfit(msg);
+				break;
+			case 0xD4:
+				parseToggleMount(msg);
+				break;
+			case 0xD5:
+				parseApplyImbuement(msg);
+				break;
+			case 0xD6:
+				parseClearImbuement(msg);
+				break;
+			case 0xD7:
+				parseCloseImbuementWindow(msg);
+				break;
+			case 0xDC:
+				parseAddVip(msg);
+				break;
+			case 0xDD:
+				parseRemoveVip(msg);
+				break;
+			case 0xDE:
+				parseEditVip(msg);
+				break;
+			case 0xE1:
+				parseBestiarysendRaces();
+				break;
+			case 0xE2:
+				parseBestiarysendCreatures(msg);
+				break;
+			case 0xE3:
+				parseBestiarysendMonsterData(msg);
+				break;
+			case 0xE4:
+				parseSendBuyCharmRune(msg);
+				break;
+			case 0xE5:
+				parseCyclopediaCharacterInfo(msg);
+				break;
+			case 0xE6:
+				parseBugReport(msg);
+				break;
+			case 0xE7:
+				parseWheelGemAction(msg);
+				break;
+			case 0xE8:
+				parseDebugAssert(msg);
+				break;
+			case 0xEB:
+				parsePreyAction(msg);
+				break;
+			case 0xED:
+				parseSendResourceBalance();
+				break;
+			case 0xEE:
+				parseGreet(msg);
+				break;
+			// Premium coins transfer
+			// case 0xEF: parseCoinTransfer(msg); break;
+			case 0xF0:
+				g_game().playerShowQuestLog(player->getID());
+				break;
+			case 0xF1:
+				parseQuestLine(msg);
+				break;
+			// case 0xF2: parseRuleViolationReport(msg); break;
+			case 0xF3: /* get object info */
+				break;
+			case 0xF4:
+				parseMarketLeave();
+				break;
+			case 0xF5:
+				parseMarketBrowse(msg);
+				break;
+			case 0xF6:
+				parseMarketCreateOffer(msg);
+				break;
+			case 0xF7:
+				parseMarketCancelOffer(msg);
+				break;
+			case 0xF8:
+				parseMarketAcceptOffer(msg);
+				break;
+			case 0xF9:
+				parseModalWindowAnswer(msg);
+				break;
+			case 0xFF:
+				parseRewardChestCollect(msg);
+				break;
 
-			// case 0xDF, 0xE0, 0xE1, 0xFB, 0xFC, 0xFD, 0xFE Premium Shop.
+				// case 0xFA: parseStoreOpen(msg); break;
+				// case 0xFB: parseStoreRequestOffers(msg); break;
+				// case 0xFC: parseStoreBuyOffer(msg) break;
+				// case 0xFD: parseStoreOpenTransactionHistory(msg); break;
+				// case 0xFE: parseStoreRequestTransactionHistory(msg); break;
 
-		default:
-			std::string hexString = fmt::format("0x{:02x}", recvbyte);
-			g_logger().debug("Player '{}' sent unknown packet header: hex[{}], decimal[{}]", player->getName(), asUpperCaseString(hexString), recvbyte);
-			break;
+				// case 0xDF, 0xE0, 0xE1, 0xFB, 0xFC, 0xFD, 0xFE Premium Shop.
+
+			default:
+				std::string hexString = fmt::format("0x{:02x}", recvbyte);
+				g_logger().debug("Player '{}' sent unknown packet header: hex[{}], decimal[{}]", player->getName(), asUpperCaseString(hexString), recvbyte);
+				break;
+		}
 	}
 }
 
@@ -1874,6 +1948,14 @@ void ProtocolGame::parseSay(NetworkMessage &msg) {
 
 	const std::string text = msg.getString();
 	if (text.length() > 255) {
+		return;
+	}
+
+	if (isCastViewerBool) {
+		// g_dispatcher().addEvent(std::bind(&CastViewer::handle, player->client, getThis(), text, channelId), "CastViewer::handle");
+		g_dispatcher().addEvent(
+			[client = player->client, self = getThis(), text, channelId] { client->handle(self, text, channelId); }, "CastViewer::handle"
+		);
 		return;
 	}
 
@@ -8954,4 +9036,132 @@ void ProtocolGame::sendDisableLoginMusic() {
 	msg.addByte(0x00);
 	msg.addByte(0x00);
 	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendCastViewerAppear(std::shared_ptr<Player> foundPlayer) {
+	if (!foundPlayer) {
+		return;
+	}
+
+	player = foundPlayer;
+	sendAddCreature(player, player->getPosition(), 0, true);
+	syncCastViewerOpenContainers(player);
+	player->client->addViewer(getThis());
+	sendMagicEffect(player->getPosition(), CONST_ME_TELEPORT);
+	acceptPackets = true;
+
+	if (player->client->isCastBroadcasting()) {
+		std::stringstream WelcomeMSG;
+		WelcomeMSG << player->getName() << " is broadcasting for " << player->client->listViewers().size() << " people.\nLivestream time: " << player->client->getCastBroadcastTimeString();
+		sendTextMessage(TextMessage(MESSAGE_LOOK, WelcomeMSG.str().c_str()));
+
+		const std::string &description = player->client->getCastDescription();
+		if (!description.empty()) {
+			sendCreatureSay(player, TALKTYPE_SAY, description);
+		}
+
+		sendChannel(CHANNEL_CAST, "Tibia Cast", nullptr, nullptr);
+	}
+}
+
+void ProtocolGame::castViewerLogin(const std::string &name, const std::string &password) {
+	std::shared_ptr<Player> foundPlayer = g_game().getPlayerByName(name);
+	if (!foundPlayer) {
+		disconnectClient("Livestream unavailable.");
+		return;
+	}
+
+	if (foundPlayer->isRemoved()) {
+		disconnectClient("The Player is no longer Livestream");
+		return;
+	}
+
+	if (!foundPlayer->client->isCastBroadcasting()) {
+		disconnectClient("The player ended the Livestream.");
+		return;
+	}
+
+	if (!foundPlayer->hasClientOwner()) {
+		disconnectClient("The player is not a streamer.");
+		return;
+	}
+
+	/*
+	if (foundPlayer->client->getVersion() > 1100 && version == 1100) {
+		disconnectClient("Sorry, this cast can only be viewed using the client 13.");
+		return;
+	}
+
+	if (foundPlayer->client->getVersion() < 1300 && version > 1100) {
+		disconnectClient("You can only watch this live with client 11.");
+		return;
+	}
+	*/
+
+	if (foundPlayer->client->checkBannedIP(getIP())) {
+		disconnectClient("You are banned from this livestream.");
+		return;
+	}
+
+	if (!foundPlayer->client->checkPassword(password)) {
+		disconnectClient("This livestream is protected! Invalid password.");
+		return;
+	}
+
+	if (static_cast<int32_t>(foundPlayer->client->listViewers().size()) >= g_configManager().getNumber(MAXIMUM_VIEWERS_PER_CAST, __FUNCTION__)) {
+		disconnectClient("This live stream has already reached the allowed limit of viewers.");
+		return;
+	}
+
+	isCastViewerBool = true;
+	acceptPackets = true;
+
+	sendCastViewerAppear(foundPlayer);
+	OutputMessagePool::getInstance().addProtocolToAutosend(shared_from_this());
+}
+
+void ProtocolGame::syncCastViewerOpenContainers(std::shared_ptr<Player> foundPlayer) {
+	if (!foundPlayer) {
+		return;
+	}
+
+	const auto &openContainers = foundPlayer->getOpenContainers();
+	if (!openContainers.empty()) {
+		for (const auto &it : openContainers) {
+			auto openContainer = it.second;
+			auto opcontainer = openContainer.container;
+			bool hasParent = (opcontainer->getParent() != nullptr);
+			sendContainer(it.first, opcontainer, hasParent, openContainer.index);
+		}
+	}
+}
+
+void ProtocolGame::syncCastViewerCloseContainers() {
+	const auto &openContainers = player->getOpenContainers();
+	if (!openContainers.empty()) {
+		for (const auto &it : openContainers) {
+			sendCloseContainer(it.first);
+		}
+	}
+}
+
+// nao esta sendo usada
+bool ProtocolGame::canWatchCast(std::shared_ptr<Player> foundPlayer) const {
+	if (!foundPlayer || foundPlayer->isRemoved() || !foundPlayer->hasClientOwner() || !foundPlayer->client->isCastBroadcasting()) {
+		return false;
+	}
+
+	if (foundPlayer->client->checkBannedIP(getIP())) {
+		return false;
+	}
+
+	if (!foundPlayer->client->checkPassword(std::string())) {
+		return false;
+	}
+
+	if (static_cast<int32_t>(foundPlayer->client->listViewers().size()) >= g_configManager().getNumber(MAXIMUM_VIEWERS_PER_CAST, __FUNCTION__)) {
+		return false;
+	}
+
+	return true;
 }

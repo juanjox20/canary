@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Hulking Prehemoth")
 local monster = {}
 
 monster.description = "a hulking prehemoth"
-monster.experience = 12690
+monster.experience = 40000
 monster.outfit = {
 	lookType = 1553,
 	lookHead = 85,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Sparkling Pools",
 }
 
-monster.health = 20700
-monster.maxHealth = 20700
+monster.health = 15700
+monster.maxHealth = 15700
 monster.race = "blood"
 monster.corpse = 39303
 monster.speed = 191
@@ -74,7 +74,7 @@ monster.voices = {
 }
 
 monster.loot = {
-	{ name = "Crystal Coin", chance = 28240 },
+	{ name = "crystal coin", chance = 92500, maxCount = 15 },
 	{ name = "Prehemoth Horns", chance = 19870 },
 	{ name = "Prehemoth Claw", chance = 16149, minCount = 1, maxCount = 2 },
 	{ name = "Ultimate Health Potion", chance = 16120 },

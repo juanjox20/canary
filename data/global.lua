@@ -1,3 +1,16 @@
+function capAll(str)
+    local newStr = ""; wordSeparate = string.gmatch(str, "([^%s]+)")
+    for v in wordSeparate do
+        v = v:gsub("^%l", string.upper)
+        if newStr ~= "" then
+            newStr = newStr.." "..v
+        else
+            newStr = v
+        end
+    end
+    return newStr
+end
+
 math.randomseed(os.time())
 
 dofile(DATA_DIRECTORY .. "/lib/lib.lua")

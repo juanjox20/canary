@@ -5,18 +5,40 @@ combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_HITBYFIRE)
 local area = createCombatArea(AREA_WAVE7, AREADIAGONAL_WAVE7)
 combat:setArea(area)
 
-function onGetFormulaValues(player, level, maglevel)
-	local min = (level / 5) + (maglevel * 2.8) + 16
-	local max = (level / 5) + (maglevel * 4.4) + 28 -- TODO: Formulas (TibiaWiki says ~Strong Flame Strike but we need more acurracy)
-	return -min, -max
-end
-
-combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-
 local spell = Spell("instant")
 
 function spell.onCastSpell(creature, var)
-	return combat:execute(creature, var)
+local weapon = creature:getSlotItem(CONST_SLOT_LEFT)
+if weapon and weapon:getId() == 43882 then -- CHECK SANGUINE COIL
+	function onGetFormulaValues(player, level, maglevel)
+	local min = (level / 8) + (maglevel * 3.5) + 26
+	local max = (level / 8) + (maglevel * 4.8) + 38
+	return -min, -max
+	end
+elseif weapon and weapon:getId() == 43883 then -- CHECK GRAND SANGUINE COIL
+	function onGetFormulaValues(player, level, maglevel)
+	local min = (level / 8) + (maglevel * 4.1) + 36
+	local max = (level / 8) + (maglevel * 5.3) + 48
+	return -min, -max
+	end
+else 
+	function onGetFormulaValues(player, level, maglevel)
+	local min = (level / 8) + (maglevel * 2.8) + 16
+	local max = (level / 8) + (maglevel * 4.4) + 28
+	return -min, -max
+	end
+end
+	combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
+	-- CHECK SANGUINE BOOTS
+	local boots = creature:getSlotItem(CONST_SLOT_FEET)
+	if boots and boots:getId() == 43884 then
+		creature:setSkillLevel(8, creature:getSkillLevel(8) + 800)
+		combat:execute(creature, var)
+		creature:setSkillLevel(8, creature:getSkillLevel(8) - 800)
+		else
+			combat:execute(creature, var)
+		end
+	return true
 end
 
 spell:group("attack")
@@ -28,7 +50,7 @@ spell:level(38)
 spell:mana(120)
 spell:isPremium(true)
 spell:needDirection(true)
-spell:cooldown(4 * 1000)
+spell:cooldown(2 * 1000)
 spell:groupCooldown(2 * 1000)
 spell:needLearn(false)
 spell:vocation("sorcerer;true", "master sorcerer;true")

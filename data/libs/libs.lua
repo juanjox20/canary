@@ -12,6 +12,8 @@ dofile(CORE_DIRECTORY .. "/libs/debugging/dump.lua")
 
 -- Systems
 dofile(CORE_DIRECTORY .. "/libs/systems/load.lua")
+dofile(CORE_DIRECTORY .. "/libs/systems/tileRequerimentsLib.lua")
 
 -- Tables
 dofile(CORE_DIRECTORY .. "/libs/tables/load.lua")
+

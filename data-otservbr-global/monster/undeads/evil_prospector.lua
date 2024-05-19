@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Evil Prospector")
 local monster = {}
 
 monster.description = "an evil prospector"
-monster.experience = 9000
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1268,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Barren Drift",
 }
 
-monster.health = 8500
-monster.maxHealth = 8500
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "undead"
 monster.corpse = 32610
 monster.speed = 220
@@ -53,7 +53,7 @@ monster.flags = {
 	canPushItems = true,
 	canPushCreatures = true,
 	staticAttackChance = 90,
-	targetDistance = 3,
+	targetDistance = 0,
 	runHealth = 0,
 	healthHidden = false,
 	isBlockable = false,

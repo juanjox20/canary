@@ -1,23 +1,23 @@
 local config = {
 	boss = {
 		name = "Goshnar's Hatred",
-		position = Position(33744, 31599, 14),
+		position = Position(411, 1645, 7),
 	},
 	requiredLevel = 250,
 	playerPositions = {
-		{ pos = Position(33773, 31601, 14), teleport = Position(33743, 31604, 14), effect = CONST_ME_TELEPORT },
-		{ pos = Position(33774, 31601, 14), teleport = Position(33743, 31604, 14), effect = CONST_ME_TELEPORT },
-		{ pos = Position(33775, 31601, 14), teleport = Position(33743, 31604, 14), effect = CONST_ME_TELEPORT },
-		{ pos = Position(33776, 31601, 14), teleport = Position(33743, 31604, 14), effect = CONST_ME_TELEPORT },
-		{ pos = Position(33777, 31601, 14), teleport = Position(33743, 31604, 14), effect = CONST_ME_TELEPORT },
+		{ pos = Position(441, 1649, 7), teleport = Position(410, 1654, 7), effect = CONST_ME_TELEPORT },
+		{ pos = Position(442, 1649, 7), teleport = Position(411, 1654, 7), effect = CONST_ME_TELEPORT },
+		{ pos = Position(443, 1649, 7), teleport = Position(412, 1654, 7), effect = CONST_ME_TELEPORT },
+		{ pos = Position(444, 1649, 7), teleport = Position(413, 1654, 7), effect = CONST_ME_TELEPORT },
+		{ pos = Position(445, 1649, 7), teleport = Position(414, 1654, 7), effect = CONST_ME_TELEPORT },
 	},
 	specPos = {
-		from = Position(33735, 31592, 14),
-		to = Position(33751, 31606, 14),
+		from = Position(402, 1642, 7),
+		to = Position(423, 1659, 7),
 	},
-	exit = Position(33621, 31427, 10),
+	exit = Position(2498, 2499, 7),
 }
 
 local lever = BossLever(config)
-lever:position({ x = 33772, y = 31601, z = 14 })
+lever:position({ x = 440, y = 1649, z = 7 })
 lever:register()

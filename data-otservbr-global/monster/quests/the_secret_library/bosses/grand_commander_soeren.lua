@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Grand Commander Soeren")
 local monster = {}
 
 monster.description = "Grand Commander Soeren"
-monster.experience = 12000
+monster.experience = 30000
 monster.outfit = {
 	lookType = 1071,
 	lookHead = 57,
@@ -18,8 +18,8 @@ monster.bosstiary = {
 	bossRace = RARITY_BANE,
 }
 
-monster.health = 17000
-monster.maxHealth = 17000
+monster.health = 90000
+monster.maxHealth = 90000
 monster.race = "blood"
 monster.corpse = 28726
 monster.speed = 105
@@ -61,6 +61,14 @@ monster.flags = {
 monster.light = {
 	level = 0,
 	color = 0,
+}
+
+monster.summon = {
+	maxSummons = 2,
+	summons = {
+		{ name = "Falcon Paladin", chance = 30, interval = 1500, count = 1 },
+		{ name = "Falcon Knight", chance = 30, interval = 1500, count = 1 },	
+	},
 }
 
 monster.voices = {

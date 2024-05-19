@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Insane Siren")
 local monster = {}
 
 monster.description = "an insane siren"
-monster.experience = 6000
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1136,
 	lookHead = 72,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Court of Summer.",
 }
 
-monster.health = 6500
-monster.maxHealth = 6500
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 30133
 monster.speed = 210

@@ -283,6 +283,11 @@ private:
 		registerMethod(L, "Player", "getIdleTime", PlayerFunctions::luaPlayerGetIdleTime);
 		registerMethod(L, "Player", "getFreeBackpackSlots", PlayerFunctions::luaPlayerGetFreeBackpackSlots);
 
+		// SaveLevel Stats
+		registerMethod(L, "Player", "saveLevelStats", PlayerFunctions::luaPlayerSaveLevelStats);
+		registerMethod(L, "Player", "restoreLevelStats", PlayerFunctions::luaPlayerRestoreLevelStats);
+		registerMethod(L, "Player", "setLevelStats", PlayerFunctions::luaPlayerSetLevelStats);
+
 		registerMethod(L, "Player", "isOffline", PlayerFunctions::luaPlayerIsOffline);
 
 		registerMethod(L, "Player", "openMarket", PlayerFunctions::luaPlayerOpenMarket);
@@ -366,6 +371,12 @@ private:
 
 		// Badge Functions
 		registerMethod(L, "Player", "addBadge", PlayerFunctions::luaPlayerAddBadge);
+
+		// Cast Functions
+		registerMethod(L, "Player", "getCastViewers", PlayerFunctions::luaPlayerGetCastViewers);
+		registerMethod(L, "Player", "setCastViewers", PlayerFunctions::luaPlayerSetCastViewers);
+		registerMethod(L, "Player", "getPrivateChannelID", PlayerFunctions::luaPlayerGetPrivateChannelID);
+		registerMethod(L, "Player", "hasClientOwner", PlayerFunctions::luaPlayerHasClientOwner);
 
 		// Title Functions
 		registerMethod(L, "Player", "addTitle", PlayerFunctions::luaPlayerAddTitle);
@@ -645,6 +656,11 @@ private:
 	static int luaPlayerGetIdleTime(lua_State* L);
 	static int luaPlayerGetFreeBackpackSlots(lua_State* L);
 
+	// SaveLevel Stats
+	static int luaPlayerSaveLevelStats(lua_State* L);
+	static int luaPlayerRestoreLevelStats(lua_State* L);
+	static int luaPlayerSetLevelStats(lua_State* L);
+
 	static int luaPlayerOpenMarket(lua_State* L);
 
 	static int luaPlayerInstantSkillWOD(lua_State* L);
@@ -727,6 +743,11 @@ private:
 	static int luaPlayerRemoveAchievementPoints(lua_State* L);
 
 	static int luaPlayerAddBadge(lua_State* L);
+
+	static int luaPlayerGetCastViewers(lua_State* L);
+	static int luaPlayerSetCastViewers(lua_State* L);
+	static int luaPlayerGetPrivateChannelID(lua_State* L);
+	static int luaPlayerHasClientOwner(lua_State* L);
 
 	static int luaPlayerAddTitle(lua_State* L);
 	static int luaPlayerGetTitles(lua_State* L);

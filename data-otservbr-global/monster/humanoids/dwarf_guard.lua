@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Dwarf Guard")
 local monster = {}
 
 monster.description = "a dwarf guard"
-monster.experience = 165
+monster.experience = 400
 monster.outfit = {
 	lookType = 70,
 	lookHead = 0,

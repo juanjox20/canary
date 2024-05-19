@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Exotic Cave Spider")
 local monster = {}
 
 monster.description = "a exotic cave spider"
-monster.experience = 1400
+monster.experience = 14000
 monster.outfit = {
 	lookType = 1344,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Exotic cave spider cave.",
 }
 
-monster.health = 1900
-monster.maxHealth = 1900
+monster.health = 13000
+monster.maxHealth = 13000
 monster.race = "venom"
 monster.corpse = 35358
 monster.speed = 132

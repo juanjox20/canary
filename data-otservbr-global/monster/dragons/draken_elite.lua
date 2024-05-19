@@ -67,6 +67,10 @@ monster.light = {
 	color = 161,
 }
 
+monster.events = {
+    "onDeath_randomItemDrops"
+}
+
 monster.voices = {
 	interval = 5000,
 	chance = 10,

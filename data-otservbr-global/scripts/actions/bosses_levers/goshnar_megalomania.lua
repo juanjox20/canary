@@ -1,7 +1,7 @@
 local config = {
 	boss = {
 		name = "Goshnar's Megalomania",
-		position = Position(33710, 31634, 14),
+		position = Position(408, 1583, 7),
 	},
 	requiredLevel = 250,
 	playerPositions = {
@@ -15,7 +15,7 @@ local config = {
 		from = Position(33701, 31626, 14),
 		to = Position(33719, 31642, 14),
 	},
-	exit = Position(33621, 31427, 10),
+	exit = Position(2498, 2499, 7),
 }
 
 local lever = BossLever(config)

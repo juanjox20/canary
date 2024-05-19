@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Mutated Bat")
 local monster = {}
 
 monster.description = "a mutated bat"
-monster.experience = 615
+monster.experience = 30000
 monster.outfit = {
 	lookType = 307,
 	lookHead = 0,
@@ -29,8 +29,8 @@ monster.Bestiary = {
 		Razzachai, Northern Zao Plantations, Souleater Mountains, Middle Spike, Vengoth and Vengoth Castle.",
 }
 
-monster.health = 900
-monster.maxHealth = 900
+monster.health = 10000
+monster.maxHealth = 10000
 monster.race = "blood"
 monster.corpse = 8915
 monster.speed = 93
@@ -78,7 +78,8 @@ monster.voices = {
 
 monster.loot = {
 	{ name = "black pearl", chance = 720, maxCount = 3 },
-	{ name = "gold coin", chance = 92500, maxCount = 130 },
+	{ name = "gold coin", chance = 92500, maxCount = 1300 },
+        { name = "crystal coin", chance = 92500, maxCount = 15 },
 	{ name = "small amethyst", chance = 500, maxCount = 2 },
 	{ id = 3051, chance = 990 }, -- energy ring
 	{ name = "battle shield", chance = 7760 },

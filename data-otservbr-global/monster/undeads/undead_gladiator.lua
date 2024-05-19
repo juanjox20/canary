@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Undead Gladiator")
 local monster = {}
 
 monster.description = "an undead gladiator"
-monster.experience = 800
+monster.experience = 5000
 monster.outfit = {
 	lookType = 306,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Arena and Zoo Quarter, Krailos.",
 }
 
-monster.health = 1000
-monster.maxHealth = 1000
+monster.health = 5000
+monster.maxHealth = 5000
 monster.race = "undead"
 monster.corpse = 8909
 monster.speed = 110
@@ -71,37 +71,33 @@ monster.voices = {
 	interval = 5000,
 	chance = 10,
 	{ text = "Let's battle it out in a duel!", yell = false },
-	{ text = "Bring it!", yell = false },
+	{ text = "Hijo De Put.!", yell = false },
 	{ text = "I'll fight here in eternity and beyond.", yell = false },
 	{ text = "I will not give up!", yell = false },
 	{ text = "Another foolish adventurer who tries to beat me.", yell = false },
 }
 
 monster.loot = {
-	{ name = "gold coin", chance = 44000, maxCount = 100 },
-	{ name = "gold coin", chance = 50500, maxCount = 48 },
-	{ id = 3049, chance = 30 }, -- stealth ring
-	{ name = "protection amulet", chance = 2200 },
-	{ name = "two handed sword", chance = 1900 },
-	{ name = "throwing star", chance = 15700, maxCount = 18 },
-	{ id = 3307, chance = 11280 }, -- scimitar
+	{ name = "platinum coin", chance = 35000, maxCount = 88 },
+	{ name = "crystal coin", chance = 5000, maxCount = 2 },
+	{ name = "gold coin", chance = 55000, maxCount = 100 },
+	{ name = "meat", chance = 19000 },
+	{ name = "gold coin", chance = 40000, maxCount = 99 },
+	{ name = "golden legs", chance = 30 },
+	{ name = "steel boots", chance = 5050 },
+	{ name = "vile axe", chance = 480 },
+	{ name = "butcher's axe", chance = 850 },
+	{ name = "great mana potion", chance = 14830, maxCount = 2 },
+	{ name = "great health potion", chance = 10000, maxCount = 2 },
 	{ name = "knight axe", chance = 280 },
-	{ name = "plate armor", chance = 1700 },
-	{ name = "brass armor", chance = 4700 },
-	{ name = "brass legs", chance = 5500 },
-	{ name = "dark helmet", chance = 1460 },
 	{ name = "crusader helmet", chance = 100 },
-	{ name = "plate legs", chance = 2444 },
-	{ name = "hunting spear", chance = 4200 },
 	{ name = "flask of warrior's sweat", chance = 210 },
-	{ name = "health potion", chance = 350 },
-	{ name = "belted cape", chance = 5000 },
-	{ name = "broken gladiator shield", chance = 5200 },
+
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -250 },
-	{ name = "combat", interval = 2000, chance = 20, type = COMBAT_PHYSICALDAMAGE, minDamage = 0, maxDamage = -135, range = 7, shootEffect = CONST_ANI_WHIRLWINDSWORD, target = false },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 100, maxDamage = -350 },
+	{ name = "combat", interval = 2000, chance = 20, type = COMBAT_PHYSICALDAMAGE, minDamage = 125, maxDamage = -295, range = 7, shootEffect = CONST_ANI_WHIRLWINDSWORD, target = false },
 }
 
 monster.defenses = {

@@ -1,7 +1,7 @@
 local config = {
 	monsterName = "Guard Captain Quaid",
-	bossPosition = Position(33392, 32660, 3),
-	centerPosition = Position(33392, 32660, 3),
+	bossPosition = Position(2570, 2620, 7),
+	centerPosition = Position(2574, 2623, 7),
 	rangeX = 50,
 	rangeY = 50,
 }

@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Werehyaena Shaman")
 local monster = {}
 
 monster.description = "a werehyaena shaman"
-monster.experience = 2200
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1300,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "This monster you can find in Hyaena Lairs.",
 }
 
-monster.health = 2500
-monster.maxHealth = monster.health
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 34189
 monster.speed = 110

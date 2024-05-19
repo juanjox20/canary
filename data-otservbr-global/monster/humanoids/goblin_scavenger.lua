@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Goblin Scavenger")
 local monster = {}
 
 monster.description = "a goblin scavenger"
-monster.experience = 37
+monster.experience = 400
 monster.outfit = {
 	lookType = 297,
 	lookHead = 0,

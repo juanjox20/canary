@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Magma Bubble")
 local monster = {}
 
 monster.description = "magma bubble"
-monster.experience = 80000
+monster.experience = 250000
 monster.outfit = {
 	lookType = 1413,
 	lookHead = 0,
@@ -23,8 +23,8 @@ monster.bosstiary = {
 	bossRace = RARITY_ARCHFOE,
 }
 
-monster.health = 450000
-monster.maxHealth = 450000
+monster.health = 650000
+monster.maxHealth = 650000
 monster.race = "undead"
 monster.corpse = 36847
 monster.speed = 0
@@ -62,6 +62,15 @@ monster.flags = {
 monster.light = {
 	level = 0,
 	color = 0,
+}
+
+monster.summon = {
+	maxSummons = 6,
+	summons = {
+		{ name = "The End of Days", chance = 60, interval = 1500, count = 5 },	
+		{ name = "Hellfire Fighter", chance = 45, interval = 1500, count = 2 },
+		{ name = "Lava Lurker", chance = 30, interval = 1500, count = 1 },		
+	},
 }
 
 monster.voices = {

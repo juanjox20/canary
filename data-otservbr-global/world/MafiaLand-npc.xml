@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<npcs>
+	<npc centerx="213" centery="1358" centerz="3" radius="1">
+		<npc name="Undal" x="0" y="0" z="3" spawntime="60" />
+	</npc>
+	<npc centerx="2711" centery="2880" centerz="3" radius="1">
+		<npc name="A Sleeping Dragon" x="0" y="1" z="3" spawntime="60" />
+	</npc>
+	<npc centerx="398" centery="124" centerz="4" radius="1">
+		<npc name="Yalahari" x="0" y="0" z="4" spawntime="60" />
+	</npc>
+	<npc centerx="396" centery="126" centerz="4" radius="1">
+		<npc name="Golem Guardian" x="0" y="0" z="4" spawntime="60" />
+	</npc>
+	<npc centerx="400" centery="126" centerz="4" radius="1">
+		<npc name="Golem Guardian" x="0" y="0" z="4" spawntime="60" />
+	</npc>
+	<npc centerx="418" centery="158" centerz="4" radius="1">
+		<npc name="Soilance" x="0" y="0" z="4" spawntime="60" />
+	</npc>
+	<npc centerx="398" centery="159" centerz="4" radius="1">
+		<npc name="Palimuth" x="0" y="0" z="4" spawntime="60" />
+	</npc>
+	<npc centerx="384" centery="162" centerz="4" radius="1">
+		<npc name="Timothy" x="0" y="0" z="4" spawntime="60" />
+	</npc>
+	<npc centerx="4278" centery="3949" centerz="4" radius="1">
+		<npc name="Gareth" x="0" y="0" z="4" spawntime="60" />
+	</npc>
+	<npc centerx="2450" centery="2458" centerz="5" radius="1">
+		<npc name="Trimegis" x="0" y="0" z="5" spawntime="60" />
+	</npc>
+	<npc centerx="4189" centery="3951" centerz="5" radius="1">
+		<npc name="Denominator" x="0" y="0" z="5" spawntime="60" />
+	</npc>
+	<npc centerx="409" centery="222" centerz="6" radius="1">
+		<npc name="Oldrak" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2495" centery="2427" centerz="6" radius="1">
+		<npc name="Emael" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2502" centery="2427" centerz="6" radius="1">
+		<npc name="Jorge" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2508" centery="2431" centerz="6" radius="1">
+		<npc name="Charos" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2491" centery="2432" centerz="6" radius="1">
+		<npc name="Kepar" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2498" centery="2439" centerz="6" radius="1">
+		<npc name="Yana" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2454" centery="2443" centerz="6" radius="1">
+		<npc name="King Tibianus" x="0" y="1" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2494" centery="2480" centerz="6" radius="1">
+		<npc name="Galuna" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2500" centery="2496" centerz="6" radius="1">
+		<npc name="Cledwyn" x="1" y="-1" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="3139" centery="2864" centerz="6" radius="1">
+		<npc name="The First Dragon" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="2744" centery="3048" centerz="6" radius="1">
+		<npc name="Altar" x="0" y="0" z="6" spawntime="60" />
+	</npc>
+	<npc centerx="1041" centery="197" centerz="7" radius="1">
+		<npc name="Gnomish Operative (Catching)" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1136" centery="229" centerz="7" radius="1">
+		<npc name="Gnomish Operative (Resonating)" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1103" centery="283" centerz="7" radius="1">
+		<npc name="Gnomish Operative (Volcano)" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1137" centery="307" centerz="7" radius="1">
+		<npc name="Gnomish Operative (GT-M-01)" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1020" centery="326" centerz="7" radius="1">
+		<npc name="Gnomish Operative (Raiders)" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="20" centery="421" centerz="7" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="29" centery="421" centerz="7" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1081" centery="1045" centerz="7" radius="1">
+		<npc name="the primal menace" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="70" centery="1295" centerz="7" radius="1">
+		<npc name="Zlak" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="27" centery="1961" centerz="7" radius="1">
+		<npc name="Gnomadness" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2488" centery="2428" centerz="7" radius="1">
+		<npc name="Cledwyn" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2507" centery="2432" centerz="7" radius="1">
+		<npc name="Rotem Valos" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2490" centery="2434" centerz="7" radius="1">
+		<npc name="Zethra" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2456" centery="2456" centerz="7" radius="1">
+		<npc name="Bozo" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2465" centery="2462" centerz="7" radius="1">
+		<npc name="Baxter" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2493" centery="2470" centerz="7" radius="1">
+		<npc name="Elane" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2491" centery="2489" centerz="7" radius="1">
+		<npc name="Hunts" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2494" centery="2489" centerz="7" radius="1">
+		<npc name="Quest" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2504" centery="2489" centerz="7" radius="1">
+		<npc name="Trainer" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2507" centery="2489" centerz="7" radius="1">
+		<npc name="Castle" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2511" centery="2490" centerz="7" radius="1">
+		<npc name="Imbuement Assistant" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2491" centery="2494" centerz="7" radius="1">
+		<npc name="Raids" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2494" centery="2494" centerz="7" radius="1">
+		<npc name="Bosses" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2504" centery="2494" centerz="7" radius="1">
+		<npc name="Dungeon" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2487" centery="2496" centerz="7" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2473" centery="2500" centerz="7" radius="1">
+		<npc name="Benjamin" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2511" centery="2504" centerz="7" radius="1">
+		<npc name="Yasir" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2488" centery="2505" centerz="7" radius="1">
+		<npc name="Xodet" x="0" y="-1" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2506" centery="2505" centerz="7" radius="1">
+		<npc name="Archery" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2469" centery="2510" centerz="7" radius="1">
+		<npc name="Naji" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2474" centery="2519" centerz="7" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2466" centery="2526" centerz="7" radius="1">
+		<npc name="Albinius" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2459" centery="2529" centerz="7" radius="1">
+		<npc name="Ivalisse" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2493" centery="2530" centerz="7" radius="1">
+		<npc name="Xodet" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2500" centery="2570" centerz="7" radius="1">
+		<npc name="Albinius" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2493" centery="2573" centerz="7" radius="1">
+		<npc name="Ivalisse" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2392" centery="2643" centerz="7" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2391" centery="2652" centerz="7" radius="1">
+		<npc name="Xodet" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2410" centery="2652" centerz="7" radius="1">
+		<npc name="Sandra" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2373" centery="2680" centerz="7" radius="1">
+		<npc name="Sandra" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2377" centery="2692" centerz="7" radius="1">
+		<npc name="Trainer" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2828" centery="2841" centerz="7" radius="1">
+		<npc name="The Orc King" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9306" centery="10859" centerz="7" radius="1">
+		<npc name="Elane" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9300" centery="10885" centerz="7" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9286" centery="10889" centerz="7" radius="1">
+		<npc name="Benjamin" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9299" centery="10894" centerz="7" radius="1">
+		<npc name="Xodet" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9318" centery="10894" centerz="7" radius="1">
+		<npc name="Sandra" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9282" centery="10899" centerz="7" radius="1">
+		<npc name="Naji" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9287" centery="10908" centerz="7" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9279" centery="10915" centerz="7" radius="1">
+		<npc name="Albinius" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9272" centery="10918" centerz="7" radius="1">
+		<npc name="Ivalisse" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="9306" centery="10919" centerz="7" radius="1">
+		<npc name="Xodet" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2717" centery="3427" centerz="8" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="8" spawntime="60" />
+	</npc>
+	<npc centerx="2700" centery="3394" centerz="9" radius="1">
+		<npc name="Tamerin" x="0" y="0" z="9" spawntime="60" />
+	</npc>
+	<npc centerx="2757" centery="3474" centerz="12" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="12" spawntime="60" />
+	</npc>
+	<npc centerx="2757" centery="3474" centerz="13" radius="1">
+		<npc name="JuanCarlos" x="0" y="0" z="13" spawntime="60" />
+	</npc>
+</npcs>

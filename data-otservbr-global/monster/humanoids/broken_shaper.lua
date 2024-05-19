@@ -1,8 +1,8 @@
 local mType = Game.createMonsterType("Broken Shaper")
 local monster = {}
 
-monster.description = "a broken shaper"
-monster.experience = 1600
+monster.description = "a broken shaper loot"
+monster.experience = 30000
 monster.outfit = {
 	lookType = 932,
 	lookHead = 94,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Astral Shaper Dungeon, Astral Shaper Ruins, Old Masonry",
 }
 
-monster.health = 2200
-monster.maxHealth = 2200
+monster.health = 10000
+monster.maxHealth = 10000
 monster.race = "blood"
 monster.corpse = 25068
 monster.speed = 155
@@ -78,42 +78,43 @@ monster.voices = {
 }
 
 monster.loot = {
-	{ id = 3031, chance = 100320, maxCount = 165 }, -- gold coin
-	{ id = 3035, chance = 70320, maxCount = 2 }, -- platinum coin
-	{ id = 24383, chance = 20000, maxCount = 2 }, -- cave turnip
-	{ id = 24384, chance = 17000 }, -- ancient belt buckle
-	{ id = 24385, chance = 20000 }, -- cracked alabaster vase
-	{ id = 24386, chance = 13000 }, -- rhino horn carving
+	{ name = "gold coin", chance = 35000, maxCount = 100 },
+	{ name = "gold coin", chance = 50000, maxCount = 99 },
+	{ name = "platinum coin", chance = 45000, maxCount = 69 },
+	{ name = "crystal coin", chance = 20000, maxCount = 5 },
+	{ name = "golden legs", chance = 1500 },
+	{ name = "steel boots", chance = 3050 },
+	{ name = "vile axe", chance = 880 },
+	{ name = "butcher's axe", chance = 1250 },
+	{ name = "gold ingot", chance = 3140 },
+	{ name = "cyan crystal fragment", chance = 7430 },
+	{ name = "red crystal fragment", chance = 7430 },
+	{ name = "blue crystal shard", chance = 5710 },
+	{ name = "green crystal fragment", chance = 3430 },
+	{ name = "magma amulet", chance = 3430 },
+	{ name = "mercenary sword", chance = 2860 },
+	{ name = "war axe", chance = 2860 },
+	{ name = "stone skin amulet", chance = 570 },
 	{ id = 24390, chance = 4000 }, -- ancient coin
-	{ id = 3147, chance = 15000 }, -- blank rune
-	{ id = 3577, chance = 50320, maxCount = 2 }, -- meat
-	{ id = 5021, chance = 5000, maxCount = 2 }, -- orichalcum pearl
 	{ id = 5912, chance = 1000, maxCount = 2 }, -- blue piece of cloth
 	{ id = 5913, chance = 5000, maxCount = 2 }, -- brown piece of cloth
 	{ id = 5914, chance = 2000, maxCount = 2 }, -- yellow piece of cloth
 	{ id = 3079, chance = 230 }, -- boots of haste
-	{ id = 239, chance = 7000 }, -- great health potion
-	{ id = 3284, chance = 1000 }, -- ice rapier
-	{ id = 3046, chance = 1000 }, -- magic light wand
-	{ id = 22193, chance = 4200 }, -- onyx chip
-	{ id = 3098, chance = 2000 }, -- ring of healing
-	{ id = 3030, chance = 3000 }, -- small ruby
-	{ id = 3029, chance = 5000 }, -- small sapphire
 	{ id = 3725, chance = 6500, maxCount = 5 }, -- brown mushroom
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200 },
-	{ name = "combat", interval = 2000, chance = 35, type = COMBAT_PHYSICALDAMAGE, minDamage = 0, maxDamage = -150, range = 7, shootEffect = CONST_ANI_SMALLSTONE, target = true },
-	{ name = "combat", interval = 2000, chance = 35, type = COMBAT_PHYSICALDAMAGE, minDamage = 0, maxDamage = -100, length = 5, spread = 0, effect = CONST_ME_SOUND_RED, target = false },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 100, maxDamage = -500 },
+	{ name = "combat", interval = 2000, chance = 35, type = COMBAT_PHYSICALDAMAGE, minDamage = 80, maxDamage = -350, range = 7, shootEffect = CONST_ANI_SMALLSTONE, target = true },
+	{ name = "combat", interval = 2000, chance = 35, type = COMBAT_PHYSICALDAMAGE, minDamage = 50, maxDamage = -250, length = 5, spread = 0, effect = CONST_ME_SOUND_RED, target = false },
 }
 
 monster.defenses = {
-	defense = 25,
-	armor = 37,
+	defense = 75,
+	armor = 77,
 	mitigation = 1.46,
 	{ name = "speed", interval = 2000, chance = 10, speedChange = 336, effect = CONST_ME_MAGIC_RED, target = false, duration = 2000 },
-	{ name = "combat", interval = 2000, chance = 15, type = COMBAT_HEALING, minDamage = 0, maxDamage = 250, effect = CONST_ME_MAGIC_BLUE, target = false },
+	{ name = "combat", interval = 2000, chance = 15, type = COMBAT_HEALING, minDamage = 35, maxDamage = 350, effect = CONST_ME_MAGIC_BLUE, target = false },
 }
 
 monster.elements = {

@@ -27,6 +27,12 @@ function playerLogin.onLogin(player)
 		end
 	end
 
+    -- Mining
+    if player:getStorageValue(configMining.level.storageTentativas) == -1 or player:getStorageValue(configMining.level.storageNivel) == -1 then
+       player:setStorageValue(configMining.level.storageTentativas, 0) -- Tentativas
+       player:setStorageValue(configMining.level.storageNivel, 1) -- Level
+    end
+
 	-- Open channels
 	if table.contains({ TOWNS_LIST.DAWNPORT, TOWNS_LIST.DAWNPORT_TUTORIAL }, player:getTown():getId()) then
 		player:openChannel(3) -- World chat

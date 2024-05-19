@@ -1,7 +1,7 @@
 local config = {
 	monsterName = "Grand Commander Soeren",
-	bossPosition = Position(33376, 31320, 2),
-	centerPosition = Position(33376, 31320, 2),
+	bossPosition = Position(2570, 2620, 7),
+	centerPosition = Position(2574, 2623, 7),
 	rangeX = 50,
 	rangeY = 50,
 }

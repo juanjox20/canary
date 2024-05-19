@@ -1,23 +1,4 @@
 local raidSchedule = {
-	["Tuesday"] = {
-		["16:00"] = { raidName = "Midnight Panther" },
-	},
-	["Wednesday"] = {
-		["12:00"] = { raidName = "Draptor" },
-	},
-	["Thursday"] = {
-		["19:00"] = { raidName = "Undead Cavebear" },
-	},
-	["Friday"] = {
-		["06:00"] = { raidName = "Titanica" },
-	},
-	["Saturday"] = {
-		["20:00"] = { raidName = "Draptor" },
-	},
-	["Sunday"] = {
-		["15:00"] = { raidName = "Midnight Panther" },
-		["13:00"] = { raidName = "Orc Backpack" },
-	},
 	["31/10"] = {
 		["16:00"] = { raidName = "Halloween Hare" },
 	},

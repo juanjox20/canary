@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Werehyaena")
 local monster = {}
 
 monster.description = "a werehyaena"
-monster.experience = 2200
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1300,
 	lookHead = 57,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Darashia Wyrm Hills only during night, Hyaena Lairs.",
 }
 
-monster.health = 2700
-monster.maxHealth = 2700
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 33821
 monster.speed = 120

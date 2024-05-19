@@ -1,24 +1,22 @@
 local config = {
-	boss = { name = "Magma Bubble" },
-	encounter = "Magma Bubble",
-	requiredLevel = 500,
+	boss = {
+		name = "Magma Bubble",
+		position = Position(1086, 266, 7),
+	},
 	playerPositions = {
-		{ pos = Position(33669, 32926, 15), teleport = Position(33655, 32917, 15), effect = CONST_ME_TELEPORT },
-		{ pos = Position(33669, 32927, 15), teleport = Position(33655, 32917, 15), effect = CONST_ME_TELEPORT },
-		{ pos = Position(33669, 32928, 15), teleport = Position(33655, 32917, 15), effect = CONST_ME_TELEPORT },
-		{ pos = Position(33669, 32929, 15), teleport = Position(33655, 32917, 15), effect = CONST_ME_TELEPORT },
-		{ pos = Position(33669, 32930, 15), teleport = Position(33655, 32917, 15), effect = CONST_ME_TELEPORT },
-	},
+		{ pos = Position(1102, 286, 7), teleport = Position(1084, 277, 7) },
+		{ pos = Position(1102, 287, 7), teleport = Position(1085, 277, 7) },
+		{ pos = Position(1102, 288, 7), teleport = Position(1086, 277, 7) },
+		{ pos = Position(1102, 289, 7), teleport = Position(1087, 277, 7) },
+		{ pos = Position(1102, 290, 7), teleport = Position(1088, 277, 7) },
+	},	
 	specPos = {
-		from = Position(33630, 32887, 15),
-		to = Position(33672, 32921, 15),
+		from = Position(1075, 257, 7),
+		to = Position(1096, 280, 7),
 	},
-	exit = Position(33659, 32897, 14),
+	exit = Position(2498, 2499, 7),
 }
 
 local lever = BossLever(config)
-lever:position(Position(33669, 32925, 15))
+lever:aid(57609)
 lever:register()
-
-local zone = lever:getZone()
-zone:addArea(Position(33633, 32915, 15), Position(33649, 32928, 15))

@@ -40,6 +40,7 @@
 #include "enums/account_errors.hpp"
 #include "enums/account_type.hpp"
 #include "enums/account_group_type.hpp"
+#include "creatures/players/cast-system/cast_viewer.hpp"
 
 MuteCountMap Player::muteCountMap;
 
@@ -48,7 +49,7 @@ Player::Player(ProtocolGame_ptr p) :
 	lastPing(OTSYS_TIME()),
 	lastPong(lastPing),
 	inbox(std::make_shared<Inbox>(ITEM_INBOX)),
-	client(std::move(p)) {
+	client(new CastViewer(p)) {
 	m_wheelPlayer = std::make_unique<PlayerWheel>(*this);
 	m_playerAchievement = std::make_unique<PlayerAchievement>(*this);
 	m_playerBadge = std::make_unique<PlayerBadge>(*this);
@@ -73,6 +74,7 @@ Player::~Player() {
 	setWriteItem(nullptr);
 	setEditHouse(nullptr);
 	logged = false;
+	client.reset();
 }
 
 bool Player::setVocation(uint16_t vocId) {
@@ -501,7 +503,7 @@ uint32_t Player::getClientIcons() {
 }
 
 void Player::addMonsterToCyclopediaTrackerList(const std::shared_ptr<MonsterType> mtype, bool isBoss, bool reloadClient /* = false */) {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -521,7 +523,7 @@ void Player::addMonsterToCyclopediaTrackerList(const std::shared_ptr<MonsterType
 }
 
 void Player::removeMonsterFromCyclopediaTrackerList(std::shared_ptr<MonsterType> mtype, bool isBoss, bool reloadClient /* = false */) {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -952,7 +954,7 @@ void Player::addStorageValueByName(const std::string &storageName, const int32_t
 }
 
 bool Player::canSee(const Position &pos) {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return false;
 	}
 	return client->canSee(pos);
@@ -1211,7 +1213,7 @@ void Player::sendLootStats(std::shared_ptr<Item> item, uint8_t count) {
 	}
 	g_metrics().addCounter("player_loot", value, { { "player", getName() } });
 
-	if (client) {
+	if (hasClientOwner()) {
 		client->sendLootStats(item, count);
 	}
 
@@ -1275,7 +1277,7 @@ std::shared_ptr<DepotLocker> Player::getDepotLocker(uint32_t depotId) {
 	}
 
 	// We need to make room for supply stash on 12+ protocol versions and remove it for 10x.
-	bool createSupplyStash = !client->oldProtocol;
+	bool createSupplyStash = !getClient()->oldProtocol;
 
 	std::shared_ptr<DepotLocker> depotLocker = std::make_shared<DepotLocker>(ITEM_LOCKER, createSupplyStash ? 4 : 3);
 	depotLocker->setDepotId(depotId);
@@ -1353,7 +1355,7 @@ void Player::sendCancelMessage(ReturnValue message) const {
 }
 
 void Player::sendStats() {
-	if (client) {
+	if (hasClientOwner()) {
 		client->sendStats();
 		lastStatsTrainingTime = getOfflineTrainingTime() / 60 / 1000;
 	}
@@ -1364,7 +1366,7 @@ void Player::updateSupplyTracker(std::shared_ptr<Item> item) {
 	auto value = iType.buyPrice;
 	g_metrics().addCounter("player_supply", value, { { "player", getName() } });
 
-	if (client) {
+	if (hasClientOwner()) {
 		client->sendUpdateSupplyTracker(item);
 	}
 
@@ -1374,7 +1376,7 @@ void Player::updateSupplyTracker(std::shared_ptr<Item> item) {
 }
 
 void Player::updateImpactTracker(CombatType_t type, int32_t amount) const {
-	if (client) {
+	if (hasClientOwner()) {
 		client->sendUpdateImpactTracker(type, amount);
 	}
 }
@@ -1385,7 +1387,7 @@ void Player::sendPing() {
 	bool hasLostConnection = false;
 	if ((timeNow - lastPing) >= 5000) {
 		lastPing = timeNow;
-		if (client) {
+		if (hasClientOwner()) {
 			client->sendPing();
 		} else {
 			hasLostConnection = true;
@@ -1400,8 +1402,8 @@ void Player::sendPing() {
 
 	if (noPongTime >= 60000 && canLogout() && g_creatureEvents().playerLogout(static_self_cast<Player>())) {
 		g_logger().info("Player {} has been kicked due to ping timeout. (has client: {})", getName(), client != nullptr);
-		if (client) {
-			client->logout(true, true);
+		if (hasClientOwner()) {
+			getClient()->logout(true, true);
 		} else {
 			g_game().removeCreature(static_self_cast<Player>(), true);
 		}
@@ -1443,7 +1445,7 @@ void Player::setEditHouse(std::shared_ptr<House> house, uint32_t listId /*= 0*/)
 }
 
 void Player::sendHouseWindow(std::shared_ptr<House> house, uint32_t listId) const {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -1565,7 +1567,7 @@ void Player::onClearImbuement(std::shared_ptr<Item> item, uint8_t slot) {
 }
 
 void Player::openImbuementWindow(std::shared_ptr<Item> item) {
-	if (!client || !item) {
+	if (!hasClientOwner() || !item) {
 		return;
 	}
 
@@ -1584,13 +1586,13 @@ void Player::openImbuementWindow(std::shared_ptr<Item> item) {
 }
 
 void Player::sendSaleItemList(const std::map<uint16_t, uint16_t> &inventoryMap) const {
-	if (client && shopOwner) {
+	if (hasClientOwner() && shopOwner) {
 		client->sendSaleItemList(shopOwner->getShopItemVector(getGUID()), inventoryMap);
 	}
 }
 
 void Player::sendMarketEnter(uint32_t depotId) {
-	if (!client || this->getLastDepotId() == -1 || !depotId) {
+	if (!hasClientOwner() || this->getLastDepotId() == -1 || !depotId) {
 		return;
 	}
 
@@ -1599,7 +1601,7 @@ void Player::sendMarketEnter(uint32_t depotId) {
 
 // container
 void Player::sendAddContainerItem(std::shared_ptr<Container> container, std::shared_ptr<Item> item) {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -1631,7 +1633,7 @@ void Player::sendAddContainerItem(std::shared_ptr<Container> container, std::sha
 }
 
 void Player::sendUpdateContainerItem(std::shared_ptr<Container> container, uint16_t slot, std::shared_ptr<Item> newItem) {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -1655,7 +1657,7 @@ void Player::sendUpdateContainerItem(std::shared_ptr<Container> container, uint1
 }
 
 void Player::sendRemoveContainerItem(std::shared_ptr<Container> container, uint16_t slot) {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -1739,7 +1741,7 @@ void Player::onCreatureAppear(std::shared_ptr<Creature> creature, bool isLogin) 
 			bed->wakeUp(static_self_cast<Player>());
 		}
 
-		auto version = client->oldProtocol ? getProtocolVersion() : CLIENT_VERSION;
+		auto version = getClient()->oldProtocol ? getProtocolVersion() : CLIENT_VERSION;
 		g_logger().info("{} has logged in. (Protocol: {})", name, version);
 
 		if (guild) {
@@ -1884,6 +1886,17 @@ void Player::onRemoveCreature(std::shared_ptr<Creature> creature, bool isLogout)
 
 		if (tradePartner) {
 			g_game().internalCloseTrade(player);
+		}
+
+		if (savedPlayerLevel != 0) {
+			level = savedPlayerLevel;
+			experience = savedPlayerExperience;
+			health = savedPlayerHP;
+			healthMax = savedPlayerMaxHP;
+			mana = savedPlayerMP;
+			manaMax = savedPlayerMaxMP;
+			capacity = savedPlayerCap;
+			savedPlayerLevel = 0;
 		}
 
 		closeShopWindow();
@@ -2033,7 +2046,7 @@ void Player::onRemoveContainerItem(std::shared_ptr<Container> container, std::sh
 }
 
 void Player::onCloseContainer(std::shared_ptr<Container> container) {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -2045,7 +2058,7 @@ void Player::onCloseContainer(std::shared_ptr<Container> container) {
 }
 
 void Player::onSendContainer(std::shared_ptr<Container> container) {
-	if (!client || !container) {
+	if (!hasClientOwner() || !container) {
 		return;
 	}
 
@@ -2206,7 +2219,7 @@ void Player::onThink(uint32_t interval) {
 		const int32_t kickAfterMinutes = g_configManager().getNumber(KICK_AFTER_MINUTES, __FUNCTION__);
 		if (idleTime > (kickAfterMinutes * 60000) + 60000) {
 			removePlayer(true);
-		} else if (client && idleTime == 60000 * kickAfterMinutes) {
+		} else if (hasClientOwner() && idleTime == 60000 * kickAfterMinutes) {
 			std::ostringstream ss;
 			ss << "There was no variation in your behaviour for " << kickAfterMinutes << " minutes. You will be disconnected in one minute if there is no change in your actions until then.";
 			client->sendTextMessage(TextMessage(MESSAGE_ADMINISTRATOR, ss.str()));
@@ -2695,6 +2708,17 @@ void Player::death(std::shared_ptr<Creature> lastHitCreature) {
 
 	loginPosition = town->getTemplePosition();
 
+	if (savedPlayerLevel != 0) {
+		level = savedPlayerLevel;
+		experience = savedPlayerExperience;
+		health = savedPlayerHP;
+		healthMax = savedPlayerMaxHP;
+		mana = savedPlayerMP;
+		manaMax = savedPlayerMaxMP;
+		capacity = savedPlayerCap;
+		savedPlayerLevel = 0;
+	}
+
 	g_game().sendSingleSoundEffect(static_self_cast<Player>()->getPosition(), sex == PLAYERSEX_FEMALE ? SoundEffect_t::HUMAN_FEMALE_DEATH : SoundEffect_t::HUMAN_MALE_DEATH, getPlayer());
 	if (skillLoss) {
 		uint8_t unfairFightReduction = 100;
@@ -2746,7 +2770,17 @@ void Player::death(std::shared_ptr<Creature> lastHitCreature) {
 			}
 		}
 
+		auto amuletBless = getInventoryItem(CONST_SLOT_NECKLACE);
+		bool amuletBlessed = false;
+		if (amuletBless != nullptr && amuletBless->getID() == 46019) {
+			amuletBlessed = true;
+		}
+
 		lostMana = static_cast<uint64_t>(sumMana * deathLossPercent);
+
+		if (amuletBlessed && lostMana > 1) {
+			lostMana = std::ceil(static_cast<uint64_t>(lostMana * 0));
+		}
 
 		while (lostMana > manaSpent && magLevel > 0) {
 			lostMana -= manaSpent;
@@ -2765,6 +2799,11 @@ void Player::death(std::shared_ptr<Creature> lastHitCreature) {
 
 		// Level loss
 		uint64_t expLoss = static_cast<uint64_t>(experience * deathLossPercent);
+
+		if (amuletBlessed && expLoss > 1) {
+			expLoss = std::ceil(static_cast<uint64_t>(expLoss * 0));
+		}
+
 		g_events().eventPlayerOnLoseExperience(static_self_cast<Player>(), expLoss);
 		g_callbacks().executeCallback(EventCallback_t::playerOnLoseExperience, &EventCallback::playerOnLoseExperience, getPlayer(), expLoss);
 
@@ -2782,6 +2821,9 @@ void Player::death(std::shared_ptr<Creature> lastHitCreature) {
 			sumSkillTries += skills[i].tries;
 
 			uint32_t lostSkillTries = static_cast<uint32_t>(sumSkillTries * deathLossPercent);
+			if (amuletBlessed && lostSkillTries > 1) {
+				lostSkillTries = std::ceil(static_cast<uint32_t>(lostSkillTries * 0));
+			}
 			while (lostSkillTries > skills[i].tries) {
 				lostSkillTries -= skills[i].tries;
 
@@ -3053,15 +3095,15 @@ void Player::addList() {
 
 void Player::removePlayer(bool displayEffect, bool forced /*= true*/) {
 	g_creatureEvents().playerLogout(static_self_cast<Player>());
-	if (client) {
-		client->logout(displayEffect, forced);
+	if (hasClientOwner()) {
+		getClient()->logout(displayEffect, forced);
 	} else {
 		g_game().removeCreature(static_self_cast<Player>());
 	}
 }
 
 void Player::notifyStatusChange(std::shared_ptr<Player> loginPlayer, VipStatus_t status, bool message) const {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -3108,7 +3150,7 @@ bool Player::addVIP(uint32_t vipGuid, const std::string &vipName, VipStatus_t st
 		IOLoginData::addVIPEntry(account->getID(), vipGuid, "", 0, false);
 	}
 
-	if (client) {
+	if (hasClientOwner()) {
 		client->sendVIP(vipGuid, vipName, "", 0, false, status);
 	}
 
@@ -3153,7 +3195,7 @@ void Player::autoCloseContainers(std::shared_ptr<Container> container) {
 
 	for (uint32_t containerId : closeList) {
 		closeContainer(containerId);
-		if (client) {
+		if (hasClientOwner()) {
 			client->sendCloseContainer(containerId);
 		}
 	}
@@ -5798,7 +5840,7 @@ GuildEmblems_t Player::getGuildEmblem(std::shared_ptr<Player> player) const {
 }
 
 void Player::sendUnjustifiedPoints() {
-	if (client) {
+	if (hasClientOwner()) {
 		double dayKills = 0;
 		double weekKills = 0;
 		double monthKills = 0;
@@ -6179,7 +6221,7 @@ void Player::onModalWindowHandled(uint32_t modalWindowId) {
 }
 
 void Player::sendModalWindow(const ModalWindow &modalWindow) {
-	if (!client) {
+	if (!hasClientOwner()) {
 		return;
 	}
 
@@ -6221,13 +6263,13 @@ void Player::sendClosePrivate(uint16_t channelId) {
 		g_chat().removeUserFromChannel(getPlayer(), channelId);
 	}
 
-	if (client) {
+	if (hasClientOwner()) {
 		client->sendClosePrivate(channelId);
 	}
 }
 
 void Player::sendCyclopediaCharacterAchievements(uint16_t secretsUnlocked, std::vector<std::pair<Achievement, uint32_t>> achievementsUnlocked) {
-	if (client) {
+	if (hasClientOwner()) {
 		client->sendCyclopediaCharacterAchievements(secretsUnlocked, achievementsUnlocked);
 	}
 }
@@ -6668,7 +6710,7 @@ void Player::initializeTaskHunting() {
 		}
 	}
 
-	if (client && g_configManager().getBoolean(TASK_HUNTING_ENABLED, __FUNCTION__) && !client->oldProtocol) {
+	if (hasClientOwner() && g_configManager().getBoolean(TASK_HUNTING_ENABLED, __FUNCTION__) && !getClient()->oldProtocol) {
 		client->writeToOutputBuffer(g_ioprey().getTaskHuntingBaseDate());
 	}
 }

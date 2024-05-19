@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<houses>
+	<house name="MafiaLand" houseid="3019" entryx="2491" entryy="2511" entryz="7" rent="55500" townid="0" size="1" />
+	<house name="Mafia House #1" houseid="3024" entryx="2503" entryy="2511" entryz="7" rent="90000" townid="1" size="62" />
+	<house name="Mafia House #2" houseid="3025" entryx="2513" entryy="2511" entryz="7" rent="50000" townid="1" size="36" />
+	<house name="Mafia House #3" houseid="3026" entryx="2479" entryy="2497" entryz="7" rent="50000" townid="1" size="118" />
+	<house name="Mafia House #4" houseid="3027" entryx="2479" entryy="2487" entryz="7" rent="50000" townid="1" size="129" />
+	<house name="" houseid="3035" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="0" />
+	<house name="" houseid="4195" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="1" />
+	<house name="" houseid="4202" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="2" />
+	<house name="" houseid="4203" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="108" />
+	<house name="" houseid="4204" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="36" />
+	<house name="" houseid="4205" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="36" />
+	<house name="" houseid="4206" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="36" />
+	<house name="" houseid="4207" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="36" />
+	<house name="" houseid="4208" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="36" />
+	<house name="" houseid="4209" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="56" />
+	<house name="" houseid="4210" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="68" />
+	<house name="" houseid="4211" entryx="0" entryy="0" entryz="0" rent="0" townid="0" size="68" />
+	<house name="Mafia House #9" houseid="4212" entryx="2479" entryy="2480" entryz="7" rent="500000" townid="1" size="84" />
+	<house name="Mafia House #6" houseid="4213" entryx="2491" entryy="2511" entryz="7" rent="100000" townid="1" size="61" />
+	<house name="Mafia House #11" houseid="4214" entryx="2486" entryy="2471" entryz="7" rent="150000" townid="1" size="120" />
+	<house name="Mafia House #5" houseid="4215" entryx="2475" entryy="2473" entryz="7" rent="100000" townid="1" size="23" />
+	<house name="Mafia House #10" houseid="4216" entryx="2510" entryy="2484" entryz="7" rent="100000" townid="1" size="44" />
+	<house name="Mafia House #12" houseid="4217" entryx="2513" entryy="2524" entryz="7" rent="100000" townid="1" size="36" />
+	<house name="Mafia House #13" houseid="4218" entryx="2525" entryy="2511" entryz="7" rent="100000" townid="1" size="18" />
+	<house name="Mafia House #14" houseid="4219" entryx="2521" entryy="2510" entryz="7" rent="100000" townid="1" size="14" />
+	<house name="Mafia House #15" houseid="4220" entryx="2526" entryy="2510" entryz="7" rent="100000" townid="1" size="14" />
+	<house name="Mafia House #16" houseid="4221" entryx="2539" entryy="2533" entryz="7" rent="15000000" guildhall="true" townid="1" size="125" />
+	<house name="Mafia House #17" houseid="4222" entryx="2525" entryy="2524" entryz="7" rent="150000" townid="1" size="18" />
+	<house name="Mafia House #18" houseid="4223" entryx="2528" entryy="2532" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #19" houseid="4224" entryx="2521" entryy="2532" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #20" houseid="4225" entryx="2509" entryy="2532" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #21" houseid="4226" entryx="2514" entryy="2532" entryz="7" rent="150000" townid="1" size="16" />
+	<house name="Mafia House #22" houseid="4227" entryx="2527" entryy="2511" entryz="7" rent="150000" townid="1" size="34" />
+	<house name="Mafia House #23" houseid="4228" entryx="2544" entryy="2511" entryz="7" rent="150000" townid="1" size="34" />
+	<house name="Mafia House #24" houseid="4229" entryx="2500" entryy="2459" entryz="7" rent="150000" townid="1" size="28" />
+	<house name="Mafia House #25" houseid="4230" entryx="2505" entryy="2459" entryz="7" rent="150000" townid="1" size="24" />
+	<house name="Mafia House #26" houseid="4231" entryx="2511" entryy="2459" entryz="7" rent="150000" townid="1" size="35" />
+	<house name="Mafia House #27" houseid="4232" entryx="2524" entryy="2464" entryz="7" rent="1000000" townid="1" size="71" />
+	<house name="Mafia House #28" houseid="4233" entryx="2535" entryy="2471" entryz="7" rent="150000" townid="1" size="18" />
+	<house name="Mafia House #29" houseid="4234" entryx="2539" entryy="2480" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #30" houseid="4235" entryx="2539" entryy="2481" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #31" houseid="4236" entryx="2539" entryy="2494" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #32" houseid="4237" entryx="2547" entryy="2481" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #33" houseid="4238" entryx="2547" entryy="2494" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #34" houseid="4239" entryx="2543" entryy="2471" entryz="7" rent="150000" townid="1" size="18" />
+	<house name="Mafia House #35" houseid="4240" entryx="2551" entryy="2471" entryz="7" rent="150000" townid="1" size="18" />
+	<house name="Mafia House #36" houseid="4241" entryx="2547" entryy="2480" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #37" houseid="4242" entryx="2555" entryy="2480" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #38" houseid="4243" entryx="2558" entryy="2465" entryz="7" rent="500000" townid="1" size="55" />
+	<house name="Mafia House #39" houseid="4244" entryx="2555" entryy="2481" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #40" houseid="4245" entryx="2555" entryy="2494" entryz="7" rent="150000" townid="1" size="14" />
+	<house name="Mafia House #41" houseid="4246" entryx="2563" entryy="2502" entryz="7" rent="200000" townid="1" size="34" />
+	<house name="Mafia House #42" houseid="4247" entryx="2546" entryy="2502" entryz="7" rent="200000" townid="1" size="34" />
+	<house name="Mafia House #43" houseid="4248" entryx="2551" entryy="2515" entryz="7" rent="200000" townid="1" size="34" />
+	<house name="Mafia House #44" houseid="4249" entryx="2559" entryy="2515" entryz="7" rent="200000" townid="1" size="28" />
+	<house name="Mafia House #45" houseid="4250" entryx="2553" entryy="2521" entryz="7" rent="150000" townid="1" size="26" />
+	<house name="Mafia House #46" houseid="4251" entryx="2553" entryy="2526" entryz="7" rent="150000" townid="1" size="26" />
+	<house name="Mafia House #47" houseid="4252" entryx="2551" entryy="2521" entryz="7" rent="150000" townid="1" size="22" />
+	<house name="Mafia House #48" houseid="4253" entryx="2551" entryy="2526" entryz="7" rent="150000" townid="1" size="22" />
+	<house name="Mafia House #49" houseid="4254" entryx="2515" entryy="2473" entryz="7" rent="250000" townid="1" size="36" />
+	<house name="Mafia House 50" houseid="4255" entryx="2520" entryy="2514" entryz="6" rent="510010" townid="1" size="18" />
+	<house name="Mafia House #51" houseid="4256" entryx="2520" entryy="2521" entryz="6" rent="510000" townid="1" size="18" />
+</houses>

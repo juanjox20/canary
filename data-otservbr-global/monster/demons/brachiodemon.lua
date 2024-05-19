@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Brachiodemon")
 local monster = {}
 
 monster.description = "a brachiodemon"
-monster.experience = 15770
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1299,
 	lookHead = 0,
@@ -68,6 +68,10 @@ monster.flags = {
 monster.light = {
 	level = 0,
 	color = 0,
+}
+
+monster.events = {
+    "onDeath_randomItemDrops"
 }
 
 monster.voices = {

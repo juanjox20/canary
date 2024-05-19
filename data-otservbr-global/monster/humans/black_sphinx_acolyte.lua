@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Black Sphinx Acolyte")
 local monster = {}
 
 monster.description = "a black sphinx acolyte"
-monster.experience = 7200
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1200,
 	lookHead = 95,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Issavi Sewers, Kilmaresh Catacombs and Kilmaresh Mountains (above and under ground).",
 }
 
-monster.health = 8100
-monster.maxHealth = 8100
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 31423
 monster.speed = 155

@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Gladiator")
 local monster = {}
 
 monster.description = "a gladiator"
-monster.experience = 90
+monster.experience = 3000
 monster.outfit = {
 	lookType = 131,
 	lookHead = 78,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Trade Quarter, Arena and Zoo Quarter.",
 }
 
-monster.health = 185
-monster.maxHealth = 185
+monster.health = 3890
+monster.maxHealth = 3890
 monster.race = "blood"
 monster.corpse = 18126
 monster.speed = 98
@@ -67,30 +67,36 @@ monster.light = {
 	color = 0,
 }
 
+monster.events = {
+    "onDeath_randomItemDrops"
+}
+
 monster.voices = {
 	interval = 5000,
 	chance = 10,
 	{ text = "You are no match for me!", yell = false },
 	{ text = "Feel my prowess.", yell = false },
-	{ text = "Fight!", yell = false },
-	{ text = "Take this!", yell = false },
+	{ text = "Pelea Cabron!", yell = false },
+	{ text = "Pareces Una Niñita!", yell = false },
 }
 
 monster.loot = {
-	{ name = "gold coin", chance = 49500, maxCount = 30 },
-	{ id = 3264, chance = 12620 }, -- sword
-	{ name = "mace", chance = 11160 },
-	{ name = "chain helmet", chance = 5200 },
-	{ name = "iron helmet", chance = 590 },
-	{ name = "brass armor", chance = 2750 },
-	{ name = "steel shield", chance = 840 },
-	{ name = "plate shield", chance = 9950 },
+	{ name = "platinum coin", chance = 35000, maxCount = 58 },
+	{ name = "crystal coin", chance = 5000, maxCount = 1 },
+	{ name = "gold coin", chance = 55000, maxCount = 100 },
 	{ name = "meat", chance = 19000 },
-	{ name = "belted cape", chance = 340 },
+	{ name = "gold coin", chance = 40000, maxCount = 99 },
+	{ name = "golden legs", chance = 30 },
+	{ name = "steel boots", chance = 5050 },
+	{ name = "vile axe", chance = 480 },
+	{ name = "butcher's axe", chance = 850 },
+	{ name = "great mana potion", chance = 14830, maxCount = 2 },
+	{ name = "great health potion", chance = 10000, maxCount = 2 },
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90 },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 50, maxDamage = -250 },
+	{ name = "combat", interval = 2000, chance = 20, type = COMBAT_PHYSICALDAMAGE, minDamage = 80, maxDamage = -235, range = 7, shootEffect = CONST_ANI_WHIRLWINDSWORD, target = false },	
 }
 
 monster.defenses = {

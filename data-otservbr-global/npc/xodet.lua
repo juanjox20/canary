@@ -39,6 +39,10 @@ local itemsTable = {
 		{ itemName = "vial", clientId = 2874, sell = 5 },
 	},
 	["runes"] = {
+		{ itemName = "Thunderstorm Rune", clientId = 3202, buy = 80 },
+		{ itemName = "Magic Wall Rune", clientId = 3180, buy = 150 },
+		{ itemName = "Paralyse Rune", clientId = 3165, buy = 800 },
+		{ itemName = "Wild Growth Rune", clientId = 3156, buy = 200 },
 		{ itemName = "avalanche rune", clientId = 3161, buy = 57 },
 		{ itemName = "blank rune", clientId = 3147, buy = 10 },
 		{ itemName = "chameleon rune", clientId = 3178, buy = 210 },

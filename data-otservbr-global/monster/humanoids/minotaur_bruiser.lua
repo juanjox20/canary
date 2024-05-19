@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Minotaur Bruiser")
 local monster = {}
 
 monster.description = "a minotaur bruiser"
-monster.experience = 50
+monster.experience = 5000
 monster.outfit = {
 	lookType = 25,
 	lookHead = 0,
@@ -17,8 +17,8 @@ monster.events = {
 	"MorrisMinotaurDeath",
 }
 
-monster.health = 100
-monster.maxHealth = 100
+monster.health = 10000
+monster.maxHealth = 10000
 monster.race = "blood"
 monster.corpse = 5969
 monster.speed = 84
@@ -78,7 +78,7 @@ monster.loot = {
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -45 },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 300, maxDamage = 500 },
 }
 
 monster.defenses = {

@@ -13,6 +13,17 @@ local levelDoor = Action()
 function levelDoor.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	for index, value in ipairs(LevelDoorTable) do
 		if value.closedDoor == item.itemid then
+			local isDoor, can = Karin.DoorsReset:checkDoor(player, toPosition)
+			if isDoor then
+				if can then
+					item:transform(value.openDoor)
+					item:getPosition():sendSingleSoundEffect(SOUND_EFFECT_TYPE_ACTION_OPEN_DOOR)
+					player:teleportTo(toPosition, true)
+				end
+
+				return true
+			end
+
 			if item.actionid > 0 and player:getLevel() >= item.actionid - 1000 then
 				item:transform(value.openDoor)
 				item:getPosition():sendSingleSoundEffect(SOUND_EFFECT_TYPE_ACTION_OPEN_DOOR)

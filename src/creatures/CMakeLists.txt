@@ -12,6 +12,7 @@ target_sources(${PROJECT_NAME}_lib PRIVATE
     npcs/npc.cpp
     npcs/npcs.cpp
     npcs/spawns/spawn_npc.cpp
+    players/cast-system/cast_viewer.cpp
     players/grouping/familiars.cpp
     players/grouping/groups.cpp
     players/grouping/guild.cpp
@@ -27,4 +28,5 @@ target_sources(${PROJECT_NAME}_lib PRIVATE
     players/wheel/player_wheel.cpp
     players/wheel/wheel_gems.cpp
     players/vocations/vocation.cpp
+    players/cast-system/cast_viewer.cpp
 )

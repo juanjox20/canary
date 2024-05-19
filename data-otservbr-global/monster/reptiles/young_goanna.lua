@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Young Goanna")
 local monster = {}
 
 monster.description = "a young goanna"
-monster.experience = 6100
+monster.experience = 30100
 monster.outfit = {
 	lookType = 1196,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Kilmaresh Central Steppe, Kilmaresh Southern Steppe, Green Belt.",
 }
 
-monster.health = 6200
-monster.maxHealth = 6200
+monster.health = 10200
+monster.maxHealth = 10200
 monster.race = "blood"
 monster.corpse = 31409
 monster.speed = 190
@@ -73,7 +73,8 @@ monster.voices = {
 }
 
 monster.loot = {
-	{ name = "platinum coin", chance = 100000, maxCount = 3 },
+	{ name = "platinum coin", chance = 100000, maxCount = 100 },
+	{ name = "crystal coin", chance = 100000, maxCount = 15 },
 	{ name = "envenomed arrow", chance = 70400, maxCount = 35 },
 	{ name = "snakebite rod", chance = 10620 },
 	{ name = "goanna meat", chance = 10030 },

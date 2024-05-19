@@ -34,6 +34,19 @@ local rewardBags = {
 		{ id = 39154, name = "arboreal tome" },
 		{ id = 39186, name = "charged arboreal ring" },
 	},
+	
+    	["BAG_Of_YOUR_LIFE"] = {
+		{ id = 43865, name = "grand sanguine blade" },
+		{ id = 43867, name = "grand sanguine cudgel" },
+		{ id = 43868, name = "grand sanguine hatchet" },
+		{ id = 43869, name = "grand sanguine razor" },
+		{ id = 43873, name = "grand sanguine bludgeon" },
+		{ id = 43875, name = "grand sanguine battleaxe" },
+		{ id = 43878, name = "grand sanguine bow" },
+		{ id = 43880, name = "grand sanguine crossbow" },
+		{ id = 43883, name = "grand sanguine coil" },
+		{ id = 43886, name = "grand sanguine rod" },
+	},
 
 	[BAG_YOU_COVET] = {
 		{ id = 43864, name = "sanguine blade" },

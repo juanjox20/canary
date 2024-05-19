@@ -1,7 +1,7 @@
 local config = {
 	monsterName = "Grand Chaplain Gaunder",
-	bossPosition = Position(33370, 31327, 5),
-	centerPosition = Position(33370, 31327, 5),
+	bossPosition = Position(2570, 2620, 7),
+	centerPosition = Position(2574, 2623, 7),
 	rangeX = 50,
 	rangeY = 50,
 }

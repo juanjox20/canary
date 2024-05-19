@@ -1,7 +1,7 @@
 local config = {
 	monsterName = "Custodian",
-	bossPosition = Position(33376, 32825, 8),
-	centerPosition = Position(33376, 32825, 8),
+	bossPosition = Position(2570, 2620, 7),
+	centerPosition = Position(2574, 2623, 7),
 	rangeX = 50,
 	rangeY = 50,
 }

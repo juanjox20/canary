@@ -77,6 +77,11 @@ Reserved player action storage key ranges (const.h)
 	Questline = Storage through the Quest
 ]]
 
+ServerStorage = {
+    Cast = 81756,
+    CastExhaust = 81757,
+}
+
 Storage = {
 	-- General storages
 	Dragonfetish = 30003,
@@ -135,6 +140,12 @@ Storage = {
 	Old storages
 	Over time, this will be dropped and replaced by the table above
 	]]
+	-- Add the object 'Podium' to the end of the object 'Storage'.
+	Podium = {
+		One = 70991,
+		Two = 70992,
+		Three = 70993
+	},
 	DeeplingsWorldChange = {
 		-- Reserved storage from 50000 - 50009
 		Questline = 50000,
@@ -1428,6 +1439,8 @@ Storage = {
 		BananaPalm = 51765,
 		WhisperMoss = 51766,
 		OldParchment = 51767,
+		LootSellerBookExaust = 52464,
+        StoreLootSellerBookExaust = 52465,
 		DragahsSpellbook = 51768,
 		StealFromThieves = 51769,
 	},
@@ -2921,6 +2934,11 @@ Storage = {
 }
 
 GlobalStorage = {
+	Podium = {
+		One = 70991,
+		Two = 70992,
+		Three = 70993
+	},
 	DangerousDepths = {
 		-- Reserved storage from 60001 - 60009
 		Geodes = {

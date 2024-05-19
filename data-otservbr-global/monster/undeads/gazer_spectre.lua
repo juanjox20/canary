@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Gazer Spectre")
 local monster = {}
 
 monster.description = "a gazer spectre"
-monster.experience = 4200
+monster.experience = 30000
 monster.outfit = {
 	lookType = 1122,
 	lookHead = 94,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Haunted Temple, Buried Cathedral",
 }
 
-monster.health = 4500
-monster.maxHealth = 4500
+monster.health = 14500
+monster.maxHealth = 14500
 monster.race = "blood"
 monster.corpse = 30167
 monster.speed = 195
@@ -78,7 +78,7 @@ monster.voices = {
 }
 
 monster.loot = {
-	{ name = "platinum coin", chance = 100000, maxCount = 5 },
+	{ name = "crystal coin", chance = 100000, maxCount = 5 },
 	{ name = "brown crystal splinter", chance = 900 },
 	{ name = "red crystal fragment", chance = 8500 },
 	{ name = "small enchanted ruby", chance = 7500 },
@@ -90,11 +90,10 @@ monster.loot = {
 	{ name = "wand of draconia", chance = 3500 },
 	{ name = "wand of inferno", chance = 1100 },
 	{ id = 30084, chance = 700 }, -- red ectoplasm
-	{ name = "magma coat", chance = 900 },
+	{ name = "magma coat", chance = 1900 },
 	{ name = "prismatic quartz", chance = 1500 },
 	{ name = "small enchanted emerald", chance = 800 },
-	{ name = "onyx chip", chance = 770 },
-	{ name = "hexagonal ruby", chance = 500 },
+	{ name = "hexagonal ruby", chance = 15500 },
 }
 
 monster.attacks = {

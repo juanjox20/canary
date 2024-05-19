@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Pits of Inferno, Demon Forge, Fury Dungeon.",
 }
 
-monster.health = 3800
-monster.maxHealth = 3800
+monster.health = 6800
+monster.maxHealth = 6800
 monster.race = "fire"
 monster.corpse = 6323
 monster.speed = 165
@@ -66,6 +66,10 @@ monster.flags = {
 monster.light = {
 	level = 5,
 	color = 212,
+}
+
+monster.events = {
+    "onDeath_randomItemDrops"
 }
 
 monster.voices = {

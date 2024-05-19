@@ -42,6 +42,10 @@ monster.changeTarget = {
 	chance = 0,
 }
 
+monster.events = {
+    "onDeath_randomItemDrops"
+}
+
 monster.strategiesTarget = {
 	nearest = 100,
 }

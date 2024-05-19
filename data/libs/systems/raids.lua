@@ -11,8 +11,8 @@
 ---@field kv KV
 Raid = {
 	registry = {},
-	checkInterval = "1m",
-	idleTime = "5m",
+	checkInterval = "10000000000000000000000m",
+	idleTime = "5000000000000000000000000000000m",
 }
 
 -- Set the metatable so that Raid inherits from Encounter

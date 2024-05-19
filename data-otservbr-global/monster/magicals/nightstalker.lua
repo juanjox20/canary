@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Nightstalker")
 local monster = {}
 
 monster.description = "a Nightstalker"
-monster.experience = 500
+monster.experience = 10000
 monster.outfit = {
 	lookType = 320,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Cemetery Quarter, Vengoth Castle, Vandura Mountain, Robson Isle.",
 }
 
-monster.health = 700
-monster.maxHealth = 700
+monster.health = 10000
+monster.maxHealth = 10000
 monster.race = "undead"
 monster.corpse = 9001
 monster.speed = 130
@@ -83,14 +83,15 @@ monster.voices = {
 
 monster.loot = {
 	{ id = 3007, chance = 1030 }, -- crystal ring
-	{ name = "gold coin", chance = 50000, maxCount = 100 },
+	{ name = "gold coin", chance = 50000, maxCount = 1000 },
 	{ name = "gold coin", chance = 50000, maxCount = 10 },
-	{ name = "platinum amulet", chance = 121 },
-	{ name = "boots of haste", chance = 121 },
-	{ name = "protection amulet", chance = 847 },
+	{ name = "platinum amulet", chance = 10000 },
+        { name = "Crystal Coin", chance = 10000 },   
+	{ name = "boots of haste", chance = 1201 },
+	{ name = "protection amulet", chance = 8407 },
 	{ name = "shadow herb", chance = 4761 },
 	{ name = "haunted blade", chance = 318 },
-	{ name = "chaos mace", chance = 121 },
+	{ name = "chaos mace", chance = 1201 },
 	{ name = "strong mana potion", chance = 1612 },
 	{ name = "spirit cloak", chance = 520 },
 	{ name = "crystal of balance", chance = 127 },

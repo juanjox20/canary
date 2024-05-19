@@ -1,7 +1,7 @@
 local config = {
 	monsterName = "Grand Canon Dominus",
-	bossPosition = Position(33384, 31282, 6),
-	centerPosition = Position(33384, 31282, 6),
+	bossPosition = Position(2570, 2620, 7),
+	centerPosition = Position(2574, 2623, 7),
 	rangeX = 50,
 	rangeY = 50,
 }

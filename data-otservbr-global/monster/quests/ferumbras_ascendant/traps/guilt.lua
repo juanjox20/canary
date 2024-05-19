@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Guilt")
 local monster = {}
 
 monster.description = "Guilt"
-monster.experience = 320
+monster.experience = 3200000
 monster.outfit = {
 	lookType = 583,
 	lookHead = 0,
@@ -13,8 +13,8 @@ monster.outfit = {
 	lookMount = 0,
 }
 
-monster.health = 2000
-monster.maxHealth = 2000
+monster.health = 2000000
+monster.maxHealth = 2000000
 monster.race = "undead"
 monster.corpse = 0
 monster.speed = 0

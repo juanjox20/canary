@@ -23,8 +23,8 @@ monster.bosstiary = {
 	bossRace = RARITY_ARCHFOE,
 }
 
-monster.health = 30000
-monster.maxHealth = 30000
+monster.health = 58000
+monster.maxHealth = 58000
 monster.race = "blood"
 monster.corpse = 31453
 monster.speed = 120
@@ -67,6 +67,13 @@ monster.light = {
 	color = 0,
 }
 
+monster.summon = {
+	maxSummons = 2,
+	summons = {
+		{ name = "Cobra Assassin", chance = 30, interval = 1500, count = 1 },
+	},
+}
+
 monster.voices = {
 	interval = 5000,
 	chance = 10,
@@ -92,7 +99,8 @@ monster.loot = {
 	{ name = "bullseye potion", chance = 18500, maxCount = 10 },
 	{ name = "magma coat", chance = 16600 },
 	{ name = "terra rod", chance = 1100 },
-	{ name = "crystal coin", chance = 9200 },
+	{ name = "crystal coin", chance = 10000, maxCount = 6 },
+	{ name = "crystal coin", chance = 10000 },
 	{ name = "violet gem", chance = 9000 },
 	{ name = "terra legs", chance = 8500 },
 	{ name = "terra hood", chance = 7400 },
@@ -103,21 +111,21 @@ monster.loot = {
 	{ name = "terra amulet", chance = 4800 },
 	{ name = "giant sapphire", chance = 4800 },
 	{ name = "magma monocle", chance = 3700 },
-	{ name = "cobra club", chance = 700 },
-	{ name = "cobra axe", chance = 600 },
-	{ name = "cobra crossbow", chance = 600 },
-	{ name = "cobra hood", chance = 400 },
-	{ name = "cobra rod", chance = 650 },
-	{ name = "cobra sword", chance = 650 },
-	{ name = "cobra wand", chance = 650 },
-	{ name = "cobra amulet", chance = 350 },
+	{ name = "cobra club", chance = 100 },
+	{ name = "cobra axe", chance = 100 },
+	{ name = "cobra crossbow", chance = 100 },
+	{ name = "cobra hood", chance = 100 },
+	{ name = "cobra rod", chance = 150 },
+	{ name = "cobra sword", chance = 150 },
+	{ name = "cobra wand", chance = 150 },
+	{ name = "cobra amulet", chance = 150 },
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -1200 },
-	{ name = "sudden death rune", interval = 2000, chance = 16, minDamage = -400, maxDamage = -600, target = true },
-	{ name = "combat", interval = 2000, chance = 13, type = COMBAT_HOLYDAMAGE, minDamage = -450, maxDamage = -640, length = 7, effect = CONST_ME_HOLYAREA, target = false },
-	{ name = "combat", interval = 2000, chance = 15, type = COMBAT_EARTHDAMAGE, minDamage = -480, maxDamage = -800, radius = 5, effect = CONST_ME_EXPLOSIONHIT, target = false },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -1500 },
+	{ name = "sudden death rune", interval = 2000, chance = 16, minDamage = -400, maxDamage = -800, target = true },
+	{ name = "combat", interval = 2000, chance = 13, type = COMBAT_HOLYDAMAGE, minDamage = -450, maxDamage = -740, length = 7, effect = CONST_ME_HOLYAREA, target = false },
+	{ name = "combat", interval = 2000, chance = 15, type = COMBAT_EARTHDAMAGE, minDamage = -480, maxDamage = -900, radius = 5, effect = CONST_ME_EXPLOSIONHIT, target = false },
 }
 
 monster.defenses = {

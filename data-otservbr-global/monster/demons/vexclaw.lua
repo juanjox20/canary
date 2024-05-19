@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Vexclaw")
 local monster = {}
 
 monster.description = "a vexclaw"
-monster.experience = 6248
+monster.experience = 30248
 monster.outfit = {
 	lookType = 854,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "The Dungeons of The Ruthless Seven.",
 }
 
-monster.health = 8500
-monster.maxHealth = 8500
+monster.health = 10500
+monster.maxHealth = 10500
 monster.race = "fire"
 monster.corpse = 22776
 monster.speed = 135
@@ -70,6 +70,10 @@ monster.light = {
 	color = 0,
 }
 
+monster.events = {
+    "onDeath_randomItemDrops"
+}
+
 monster.voices = {
 	interval = 5000,
 	chance = 10,
@@ -79,7 +83,8 @@ monster.voices = {
 
 monster.loot = {
 	{ name = "gold coin", chance = 100000, maxCount = 200 },
-	{ name = "platinum coin", chance = 100000, maxCount = 6 },
+	{ name = "platinum coin", chance = 100000, maxCount = 100 },
+	{ name = "crystal coin", chance = 100000, maxCount = 10 },
 	{ name = "great spirit potion", chance = 26010, maxCount = 5 },
 	{ name = "great mana potion", chance = 25210, maxCount = 5 },
 	{ name = "vexclaw talon", chance = 21500 },

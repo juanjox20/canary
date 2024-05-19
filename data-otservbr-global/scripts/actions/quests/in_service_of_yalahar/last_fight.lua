@@ -1,10 +1,10 @@
 local waves = {
-	Position(32779, 31166, 10),
-	Position(32787, 31166, 10),
-	Position(32782, 31162, 10),
-	Position(32784, 31162, 10),
-	Position(32782, 31170, 10),
-	Position(32784, 31170, 10),
+	Position(376, 102, 7),
+	Position(384, 102, 7),
+	Position(379, 98, 7),
+	Position(381, 98, 7),
+	Position(379, 106, 7),
+	Position(381, 106, 7),
 }
 
 local creatureNames = {
@@ -15,13 +15,13 @@ local creatureNames = {
 }
 
 local effectPositions = {
-	Position(32779, 31161, 10),
-	Position(32787, 31171, 10),
+	Position(376, 97, 7),
+	Position(384, 107, 7),
 }
 
 local function doClearAreaAzerus()
 	if Game.getStorageValue(GlobalStorage.InServiceOfYalahar.LastFight) == 1 then
-		local spectators, spectator = Game.getSpectators(Position(32783, 31166, 10), false, false, 10, 10, 10, 10)
+		local spectators, spectator = Game.getSpectators(Position(380, 102, 7), false, false, 10, 10, 10, 10)
 		for i = 1, #spectators do
 			spectator = spectators[i]
 			if spectator:isMonster() then
@@ -35,7 +35,7 @@ local function doClearAreaAzerus()
 end
 
 local function doChangeAzerus()
-	local spectators, spectator = Game.getSpectators(Position(32783, 31166, 10), false, false, 10, 10, 10, 10)
+	local spectators, spectator = Game.getSpectators(Position(380, 102, 7), false, false, 10, 10, 10, 10)
 	for i = 1, #spectators do
 		spectator = spectators[i]
 		if spectator:isMonster() and spectator:getName():lower() == "azerus" then
@@ -62,7 +62,7 @@ function inServiceYalaharLastFight.onUse(player, item, fromPosition, target, toP
 	end
 
 	local amountOfPlayers = 1
-	local spectators = Game.getSpectators(Position(32783, 31166, 10), false, true, 10, 10, 10, 10)
+	local spectators = Game.getSpectators(Position(380, 102, 7), false, true, 10, 10, 10, 10)
 	if #spectators < amountOfPlayers then
 		for i = 1, #spectators do
 			spectators[i]:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You need atleast " .. amountOfPlayers .. " players inside the quest room.")
@@ -71,7 +71,7 @@ function inServiceYalaharLastFight.onUse(player, item, fromPosition, target, toP
 	end
 
 	Game.setStorageValue(GlobalStorage.InServiceOfYalahar.LastFight, 1)
-	addEvent(Game.createMonster, 18 * 1000, "Azerus2", Position(32783, 31167, 10), false, true)
+	addEvent(Game.createMonster, 18 * 1000, "Azerus2", Position(380, 103, 7), false, true)
 	--addEvent(Game.createMonster, 18 * 1000, "Azerus2", Position(32783, 31167, 10))
 
 	local azeruswavemonster

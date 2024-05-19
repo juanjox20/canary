@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Minotaur Guard")
 local monster = {}
 
 monster.description = "a minotaur guard"
-monster.experience = 160
+monster.experience = 5000
 monster.outfit = {
 	lookType = 29,
 	lookHead = 0,
@@ -28,8 +28,8 @@ monster.Bestiary = {
 		Plains of Havoc, Kazordoon Minotaur Cave, Foreigner Quarter.",
 }
 
-monster.health = 185
-monster.maxHealth = 185
+monster.health = 10000
+monster.maxHealth = 10000
 monster.race = "blood"
 monster.corpse = 5983
 monster.speed = 95
@@ -71,6 +71,9 @@ monster.light = {
 	color = 0,
 }
 
+monster.events = {
+    "onDeath_randomItemDrops"
+}
 monster.voices = {
 	interval = 5000,
 	chance = 10,
@@ -93,7 +96,7 @@ monster.loot = {
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100 },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 300, maxDamage = 500 },
 }
 
 monster.defenses = {

@@ -233,6 +233,14 @@ function Player:onLookInBattleList(creature, distance)
 			description = string.format("%s\nIP: %s", description, Game.convertIpToString(creature:getIp()))
 		end
 	end
+
+	if creature:isPlayer() then
+		local restores = creature:kv():get("restore-system-count") or 0
+		if restores > 0 then
+			description = string.format("%s Restores: %d.", description, restores)
+		end
+	end
+
 	self:sendTextMessage(MESSAGE_LOOK, description)
 end
 
@@ -569,6 +577,53 @@ function Player:onGainExperience(target, exp, rawExp)
 		end
 	end
 
+	-- restore bonus exp
+	local restores = self:kv():get("restore-system-count") or 0
+	if restores > 0 then
+		exp = exp * (1 + (restores / 100))
+		--logger.info("bonus exp: {}%", restores)
+	end
+
+	local bonusVipAmulet = true
+	local vipAmulets = { 45689, 44845 }
+
+	if bonusVipAmulet then
+		local amulet = self:getSlotItem(CONST_SLOT_NECKLACE)
+		if amulet and table.contains(vipAmulets, amulet:getId()) then
+			local bonusPercent = 0.1 -- 10%
+			exp = exp * (1 + bonusPercent)
+		end
+	end
+
+	local bonusVipRing = true
+	local vipRings = { 45690, 44826 }
+
+	if bonusVipRing then
+		local ring = self:getSlotItem(CONST_SLOT_RING)
+		if ring and table.contains(vipRings, ring:getId()) then
+			local bonusPercent = 0.1 -- 10%
+			exp = exp * (1 + bonusPercent)
+		end
+	end
+	
+	local castStatus = self:getStorageValue(ServerStorage.Cast)
+	local castBonusExp = 9999999
+	if castBonusExp > 0 and castStatus > 0 then
+		castBonusExp = (castBonusExp > 100 and 100) or castBonusExp
+		exp = exp * (1 + (castBonusExp / 100))
+	end
+
+	-- castle war
+	local bonusCastleWarKV = self:kv():scoped("war-castle"):get("bonus-time") or 0
+	if bonusCastleWarKV > 0 then
+		local timeLeft = bonusCastleWarKV - os.time()
+		if timeLeft > 0 then
+			exp = 1.1 * exp -- bonus de 10% = 1.1 - apenas para players que participarem da dominação, não basta ser da guild dominante.
+		elseif timeLeft ~= 0 then
+			self:kv():scoped("war-castle"):remove("bonus-time") -- treated storage kv
+		end
+	end
+
 	local lowLevelBonuxExp = self:getFinalLowLevelBonus()
 	local baseRate = self:getFinalBaseRateExperience()
 
@@ -627,6 +682,10 @@ function Player:onCombat(target, item, primaryDamage, primaryType, secondaryDama
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end
 
+	if target then
+        	primaryDamage, secondaryDamage = Karin.PlayerSetup:onCombat(self, target, primaryDamage, primaryType, secondaryDamage, secondaryType)
+    	end
+
 	if ItemType(item:getId()):getWeaponType() == WEAPON_AMMO then
 		if table.contains({ ITEM_OLD_DIAMOND_ARROW, ITEM_DIAMOND_ARROW }, item:getId()) then
 			return primaryDamage, primaryType, secondaryDamage, secondaryType
@@ -669,7 +728,43 @@ function Player:onChangeZone(zone)
 	return false
 end
 
-function Player:onInventoryUpdate(item, slot, equip) end
+local t = {}
+function Player:onInventoryUpdate(item, slot, equip) 
+    if equip then
+        if not t[self:getId()] then
+            t[self:getId()] = 0
+        end
+
+        t[self:getId()] = t[self:getId()] + 1
+        if t[self:getId()] >= 3 then
+            t[self:getId()] = 0
+            if item:getId() == 46020 then
+                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now protected by the amulet bless.")
+            end
+            if item:getId() == 46019 then
+                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now protected by the amulet bless.")
+            end
+			  if item:getId() == 46012 then
+                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now protected by the amulet bless.")
+            end
+			  if item:getId() == 46013 then
+                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now protected by the amulet bless.")
+            end
+			  if item:getId() == 46005 then
+                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now protected by the amulet bless.")
+            end
+			  if item:getId() == 46006 then
+                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now protected by the amulet bless.")
+            end  
+			  if item:getId() == 45998 then
+                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now protected by the amulet bless.")
+            end
+			  if item:getId() == 45999 then
+                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now protected by the amulet bless.")
+            end
+        end
+    end
+end
 
 function Player:getURL()
 	local playerLink = string.gsub(self:getName(), "%s+", "+")

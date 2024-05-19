@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Grand Canon Dominus")
 local monster = {}
 
 monster.description = "Grand Canon Dominus"
-monster.experience = 11000
+monster.experience = 30000
 monster.outfit = {
 	lookType = 1071,
 	lookHead = 57,
@@ -18,8 +18,8 @@ monster.bosstiary = {
 	bossRace = RARITY_BANE,
 }
 
-monster.health = 15000
-monster.maxHealth = 15000
+monster.health = 90000
+monster.maxHealth = 90000
 monster.race = "blood"
 monster.corpse = 28737
 monster.speed = 105
@@ -61,6 +61,14 @@ monster.flags = {
 monster.light = {
 	level = 0,
 	color = 0,
+}
+
+monster.summon = {
+	maxSummons = 2,
+	summons = {
+		{ name = "Falcon Paladin", chance = 30, interval = 1500, count = 1 },
+		{ name = "Falcon Knight", chance = 30, interval = 1500, count = 1 },	
+	},
 }
 
 monster.voices = {

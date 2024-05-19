@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Harpy")
 local monster = {}
 
 monster.description = "a harpy"
-monster.experience = 5720
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1604,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Ingol",
 }
 
-monster.health = 7700
-monster.maxHealth = 7700
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 42222
 monster.speed = 175

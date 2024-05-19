@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Crazed Summer Rearguard")
 local monster = {}
 
 monster.description = "a crazed summer rearguard"
-monster.experience = 4700
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1136,
 	lookHead = 114,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Court of Summer, Dream Labyrinth.",
 }
 
-monster.health = 5300
-monster.maxHealth = 5300
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 30081
 monster.speed = 200

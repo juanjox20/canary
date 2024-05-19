@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Stonerefiner")
 local monster = {}
 
 monster.description = "a stonerefiner"
-monster.experience = 500
+monster.experience = 30000
 monster.outfit = {
 	lookType = 1032,
 	lookHead = 0,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Corym Mines.",
 }
 
-monster.health = 800
-monster.maxHealth = 800
+monster.health = 10800
+monster.maxHealth = 10800
 monster.race = "blood"
 monster.corpse = 27536
 monster.speed = 110
@@ -79,6 +79,7 @@ monster.voices = {
 
 monster.loot = {
 	{ name = "platinum coin", chance = 50930, maxCount = 4 },
+	{ name = "platinum coin", chance = 50930, maxCount = 15 },
 	{ name = "rare earth", chance = 39750, maxCount = 2 },
 	{ id = 12600, chance = 27980, maxCount = 5 }, -- coal
 	{ name = "glob of acid slime", chance = 23680 },
@@ -88,9 +89,9 @@ monster.loot = {
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100 },
-	{ name = "berserk", interval = 2000, chance = 15, minDamage = 0, maxDamage = -70, target = false },
-	{ name = "stone shower rune", interval = 2000, chance = 10, minDamage = -40, maxDamage = -80, range = 7, target = false },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 400, maxDamage = 1500 },
+	{ name = "berserk", interval = 2000, chance = 15, minDamage = 400, maxDamage = 700, target = false },
+	{ name = "stone shower rune", interval = 2000, chance = 10, minDamage = 440, maxDamage = 800, range = 7, target = false },
 }
 
 monster.defenses = {

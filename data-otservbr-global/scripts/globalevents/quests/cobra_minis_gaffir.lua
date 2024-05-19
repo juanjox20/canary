@@ -1,7 +1,7 @@
 local config = {
 	monsterName = "Gaffir",
-	bossPosition = Position(33394, 32674, 4),
-	centerPosition = Position(33394, 32674, 4),
+	bossPosition = Position(2570, 2620, 7),
+	centerPosition = Position(2574, 2623, 7),
 	rangeX = 50,
 	rangeY = 50,
 }

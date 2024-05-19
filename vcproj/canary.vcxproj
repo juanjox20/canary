@@ -32,6 +32,7 @@
     <ClInclude Include="..\src\creatures\npcs\npc.hpp" />
     <ClInclude Include="..\src\creatures\npcs\npcs.hpp" />
     <ClInclude Include="..\src\creatures\npcs\spawns\spawn_npc.hpp" />
+    <ClInclude Include="..\src\creatures\players\cast-system\cast_viewer.hpp" />
     <ClInclude Include="..\src\creatures\players\grouping\familiars.hpp" />
     <ClInclude Include="..\src\creatures\players\grouping\groups.hpp" />
     <ClInclude Include="..\src\creatures\players\grouping\guild.hpp" />
@@ -247,6 +248,7 @@
     <ClCompile Include="..\src\creatures\npcs\npcs.cpp" />
     <ClCompile Include="..\src\creatures\npcs\spawns\spawn_npc.cpp" />
     <ClCompile Include="..\src\account\account.cpp" />
+    <ClCompile Include="..\src\creatures\players\cast-system\cast_viewer.cpp" />
     <ClCompile Include="..\src\creatures\players\grouping\familiars.cpp" />
     <ClCompile Include="..\src\creatures\players\grouping\groups.cpp" />
     <ClCompile Include="..\src\creatures\players\grouping\guild.cpp" />

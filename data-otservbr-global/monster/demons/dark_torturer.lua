@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Dark Torturer")
 local monster = {}
 
 monster.description = "a dark torturer"
-monster.experience = 4650
+monster.experience = 20000
 monster.outfit = {
 	lookType = 234,
 	lookHead = 0,
@@ -27,8 +27,8 @@ monster.Bestiary = {
 	Oramond Fury Dungeon, Roshamuul Prison, Grounds of Damnation and Halls of Ascension.",
 }
 
-monster.health = 7350
-monster.maxHealth = 7350
+monster.health = 8350
+monster.maxHealth = 8350
 monster.race = "undead"
 monster.corpse = 6327
 monster.speed = 185
@@ -71,6 +71,10 @@ monster.light = {
 	color = 0,
 }
 
+monster.events = {
+    "onDeath_randomItemDrops"
+}
+
 monster.voices = {
 	interval = 5000,
 	chance = 10,
@@ -82,23 +86,23 @@ monster.voices = {
 }
 
 monster.loot = {
-	{ name = "gold coin", chance = 50000, maxCount = 100 },
-	{ name = "gold coin", chance = 40000, maxCount = 99 },
-	{ name = "platinum coin", chance = 55000, maxCount = 8 },
-	{ name = "golden legs", chance = 30 },
+	{ name = "gold coin", chance = 45000, maxCount = 100 },
+	{ name = "gold coin", chance = 30000, maxCount = 99 },
+	{ name = "platinum coin", chance = 35000, maxCount = 35 },
+	{ name = "golden legs", chance = 10 },
 	{ id = 3461, chance = 5250 }, -- saw
-	{ name = "steel boots", chance = 5050 },
+	{ name = "steel boots", chance = 1050 },
 	{ name = "ham", chance = 60000, maxCount = 2 },
-	{ name = "orichalcum pearl", chance = 2760, maxCount = 2 },
-	{ name = "cat's paw", chance = 2222 },
-	{ name = "jewelled backpack", chance = 1192 },
-	{ name = "soul orb", chance = 23000 },
-	{ id = 6299, chance = 2008 }, -- death ring
-	{ name = "demonic essence", chance = 8520 },
-	{ name = "flask of demonic blood", chance = 33333, maxCount = 3 },
+	{ name = "orichalcum pearl", chance = 1760, maxCount = 2 },
+	{ name = "cat's paw", chance = 1222 },
+	{ name = "jewelled backpack", chance = 1000 },
+	{ name = "soul orb", chance = 3000 },
+	{ id = 6299, chance = 1008 }, -- death ring
+	{ name = "demonic essence", chance = 5520 },
+	{ name = "flask of demonic blood", chance = 3333, maxCount = 3 },
 	{ name = "assassin star", chance = 2222, maxCount = 5 },
-	{ name = "vile axe", chance = 480 },
-	{ name = "butcher's axe", chance = 850 },
+	{ name = "vile axe", chance = 250 },
+	{ name = "butcher's axe", chance = 550 },
 	{ name = "great mana potion", chance = 14830, maxCount = 2 },
 	{ name = "great health potion", chance = 10000, maxCount = 2 },
 	{ name = "gold ingot", chance = 3140 },

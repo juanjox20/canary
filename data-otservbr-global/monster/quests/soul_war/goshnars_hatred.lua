@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Goshnar's Hatred")
 local monster = {}
 
 monster.description = "Goshnar's Hatred"
-monster.experience = 75000
+monster.experience = 1000000
 monster.outfit = {
 	lookType = 1307,
 	lookHead = 0,

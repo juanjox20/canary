@@ -1,6 +1,6 @@
 local questArea = {
-	Position(32706, 32345, 7),
-	Position(32725, 32357, 7),
+	Position(2574, 2623, 7),
+	Position(2574, 2623, 7),
 }
 
 local sounds = {

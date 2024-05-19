@@ -70,6 +70,10 @@ monster.light = {
 	color = 0,
 }
 
+monster.events = {
+    "onDeath_randomItemDrops"
+}
+
 monster.summon = {
 	maxSummons = 2,
 	summons = {

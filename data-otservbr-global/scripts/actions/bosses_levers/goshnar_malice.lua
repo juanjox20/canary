@@ -1,7 +1,7 @@
 local config = {
 	boss = {
 		name = "Goshnar's Malice",
-		position = Position(33710, 31599, 14),
+		position = Position(446, 1618, 7),
 	},
 	requiredLevel = 250,
 	playerPositions = {
@@ -15,7 +15,7 @@ local config = {
 		from = Position(33699, 31590, 14),
 		to = Position(33718, 31607, 14),
 	},
-	exit = Position(33621, 31427, 10),
+	exit = Position(2498, 2499, 7),
 }
 
 local lever = BossLever(config)

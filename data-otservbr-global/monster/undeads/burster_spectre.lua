@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Burster Spectre")
 local monster = {}
 
 monster.description = "a burster spectre"
-monster.experience = 6000
+monster.experience = 30000
 monster.outfit = {
 	lookType = 1122,
 	lookHead = 9,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Haunted Tomb west of Darashia, Buried Cathedral.",
 }
 
-monster.health = 6500
-monster.maxHealth = 6500
+monster.health = 16500
+monster.maxHealth = 16500
 monster.race = "blood"
 monster.corpse = 30163
 monster.speed = 200
@@ -78,7 +78,7 @@ monster.voices = {
 
 monster.loot = {
 	{ name = "platinum coin", chance = 100000, maxCount = 7 },
-	{ name = "great spirit potion", chance = 100000, maxCount = 3 },
+	{ name = "crystal coin", chance = 100000, maxCount = 5 },
 	{ name = "protection amulet", chance = 15000 },
 	{ name = "life crystal", chance = 12050 },
 	{ name = "silver amulet", chance = 15000 },
@@ -86,18 +86,12 @@ monster.loot = {
 	{ name = "wand of cosmic energy", chance = 11800 },
 	{ name = "dragon necklace", chance = 16600 },
 	{ name = "stone skin amulet", chance = 8860 },
-	{ id = 30082, chance = 15600 }, -- blue ectoplasm
 	{ name = "glacier amulet", chance = 16890 },
-	{ name = "orb", chance = 18980 },
 	{ name = "hailstorm rod", chance = 17550 },
-	{ name = "elven amulet", chance = 1800 },
-	{ name = "garlic necklace", chance = 2640 },
 	{ name = "platinum amulet", chance = 2600 },
-	{ name = "mind stone", chance = 1800 },
 	{ name = "glacial rod", chance = 520 },
 	{ name = "shockwave amulet", chance = 620 },
-	{ name = "strange symbol", chance = 720 },
-	{ name = "hexagonal ruby", chance = 480 },
+	{ name = "hexagonal ruby", chance = 15500 },
 }
 
 monster.attacks = {

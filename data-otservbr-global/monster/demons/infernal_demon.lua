@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Infernal Demon")
 local monster = {}
 
 monster.description = "an infernal demon"
-monster.experience = 17430
+monster.experience = 40000
 monster.outfit = {
 	lookType = 1313,
 	lookHead = 0,
@@ -70,6 +70,10 @@ monster.light = {
 	color = 0,
 }
 
+monster.events = {
+    "onDeath_randomItemDrops"
+}
+
 monster.voices = {
 	interval = 5000,
 	chance = 10,
@@ -94,7 +98,6 @@ monster.loot = {
 	{ name = "giant sword", chance = 2860 },
 	{ name = "magma boots", chance = 2290 },
 	{ name = "stone skin amulet", chance = 570 },
-	{ id = 34109, chance = 20 }, -- bag you desire
 }
 
 monster.attacks = {

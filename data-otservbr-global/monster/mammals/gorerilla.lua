@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Gorerilla")
 local monster = {}
 
 monster.description = "a gorerilla"
-monster.experience = 13172
+monster.experience = 35000
 monster.outfit = {
 	lookType = 1559,
 	lookHead = 85,
@@ -53,7 +53,7 @@ monster.flags = {
 	canPushItems = true,
 	canPushCreatures = true,
 	staticAttackChance = 90,
-	targetDistance = 3,
+	targetDistance = 1,
 	runHealth = 0,
 	healthHidden = false,
 	isBlockable = false,
@@ -74,16 +74,16 @@ monster.voices = {
 }
 
 monster.loot = {
-	{ name = "Crystal Coin", chance = 20700, minCount = 1, maxCount = 2 },
+	{ name = "Crystal Coin", chance = 20700, minCount = 1, maxCount = 15 },
 	{ name = "Gorerilla Mane", chance = 19890 },
 	{ name = "Gorerilla Tail", chance = 17060 },
 	{ name = "Ultimate Mana Potion", chance = 11210, minCount = 1, maxCount = 3 },
 	{ name = "Doublet", chance = 5880 },
 	{ name = "Magma Coat", chance = 2440 },
 	{ name = "Black Pearl", chance = 500, minCount = 1, maxCount = 2 },
-	{ name = "Crystal Crossbow", chance = 110 },
-	{ name = "Composite Hornbow", chance = 30 },
-	{ name = "Ornate Crossbow", chance = 30 },
+	{ name = "Crystal Crossbow", chance = 1110 },
+	{ name = "Composite Hornbow", chance = 1130 },
+	{ name = "Ornate Crossbow", chance = 1300 },
 }
 
 monster.attacks = {

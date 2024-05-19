@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Werelion")
 local monster = {}
 
 monster.description = "a werelion"
-monster.experience = 2200
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1301,
 	lookHead = 58,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Lion Sanctum.",
 }
 
-monster.health = 2800
-monster.maxHealth = 2800
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 33825
 monster.speed = 110

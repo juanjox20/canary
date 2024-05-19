@@ -367,6 +367,7 @@ bool ConfigManager::load() {
 	loadStringConfig(L, TIBIADROME_CONCOCTION_TICK_TYPE, "tibiadromeConcoctionTickType", "online");
 	loadStringConfig(L, URL, "url", "");
 	loadStringConfig(L, WORLD_TYPE, "worldType", "pvp");
+	loadIntConfig(L, MAXIMUM_VIEWERS_PER_CAST, "maximumViewersPerCast", 50);
 
 	loaded = true;
 	lua_close(L);

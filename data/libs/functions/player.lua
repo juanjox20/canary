@@ -594,6 +594,12 @@ function Player:calculateLootFactor(monster)
 		suffix = suffix .. (" (vip bonus: %d%%)"):format(math.floor(vipBoost * 100 + 0.5))
 	end
 
+	local sItem = self:getSlotItem(CONST_SLOT_NECKLACE)
+    if sItem and sItem:getId() == 46019 then
+        factor = factor * 1.2 -- 20% de loot bonus
+        suffix = suffix .. " (amulet bonus: 10%)"
+    end
+
 	return {
 		factor = factor,
 		msgSuffix = suffix,

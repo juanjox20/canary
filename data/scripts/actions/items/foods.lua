@@ -94,7 +94,6 @@ local foods = {
 	[11681] = { 55, "Gulp." }, -- ectoplasmic sushi
 	[11682] = { 18, "Yum." }, -- dragonfruit
 	[11683] = { 2, "Munch." }, -- peas
-	[12310] = { 20, "Crunch." }, -- haunch of boar
 	[13992] = { 55, "Munch." }, -- sandfish
 	[14084] = { 14, "Urgh." }, -- larvae
 	[14085] = { 15, "Munch." }, -- deepling filet

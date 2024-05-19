@@ -12,7 +12,7 @@ function teleportItem.onUse(player, item, fromPosition, target, toPosition, isHo
 	return true
 end
 
-for uniqueRange = 15001, 20000 do
+for uniqueRange = 15551, 20000 do
 	teleportItem:uid(uniqueRange)
 end
 

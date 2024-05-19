@@ -1,4 +1,4 @@
-local flowerPosition = Position(32024, 32830, 4)
+local flowerPosition = Position(2574, 2623, 7)
 
 local function decayFlower(tile)
 	local item = tile:getItemById(5658)

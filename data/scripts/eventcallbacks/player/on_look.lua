@@ -20,6 +20,25 @@ function callback.playerOnLook(player, thing, position, distance)
 		if ownerName then
 			description = string.format("%s\nIt belongs to %s.", description, ownerName)
 		end
+	elseif thing:isPlayer() then
+		description = description .. thing:getDescription(distance)
+		local Dodge = 0 
+		local Critical = 0
+		local Reflect = 0
+
+		local currentDodge = thing:getStorageValue(Karin.PlayerSetup.Dodge.Storage) 
+		local currentCritical = thing:getStorageValue(Karin.PlayerSetup.Critical.Storage)
+		local currentReflect = thing:getStorageValue(Karin.PlayerSetup.Reflect.Storage)
+		if currentDodge > 0 then
+			Dodge = Dodge + currentDodge
+		end
+		if currentCritical > 0 then
+			Critical = Critical + currentCritical
+		end
+		if currentReflect > 0 then
+			Reflect = Reflect + currentReflect
+		end
+		description = description..'\n[Dodge: +' .. Dodge / 10 .. '%/'.. Karin.PlayerSetup.Reflect.LimitUpgrade / 10 .. '%]\n[Critical: +' .. Critical / 10 .. '%/'.. Karin.PlayerSetup.Reflect.LimitUpgrade / 10 .. '%]\n[Reflect: +' .. Reflect / 10 .. '%/'.. Karin.PlayerSetup.Reflect.LimitUpgrade / 10 ..'%]\n'
 	else
 		description = description .. thing:getDescription(distance)
 		if thing:isMonster() then
@@ -80,6 +99,14 @@ function callback.playerOnLook(player, thing, position, distance)
 			end
 		end
 	end
+
+	if thing:isPlayer() then
+		local restores = thing:kv():get("restore-system-count") or 0
+		if restores > 0 then
+			description = string.format("%s Restores: %d.", description, restores)
+		end
+	end
+
 	player:sendTextMessage(MESSAGE_LOOK, description)
 end
 

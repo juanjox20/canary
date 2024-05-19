@@ -6003,6 +6003,10 @@ void Game::playerSay(uint32_t playerId, uint16_t channelId, SpeakClasses type, c
 		player->removeMessageBuffer();
 	}
 
+	if (channelId == CHANNEL_CAST) {
+		player->sendToChannel(player, TALKTYPE_CHANNEL_R1, text, channelId);
+	}
+
 	switch (type) {
 		case TALKTYPE_SAY:
 			internalCreatureSay(player, TALKTYPE_SAY, text, false);

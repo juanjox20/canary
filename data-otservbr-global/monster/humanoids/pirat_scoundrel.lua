@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Pirat Scoundrel")
 local monster = {}
 
 monster.description = "a pirat scoundrel"
-monster.experience = 1600
+monster.experience = 37000
 monster.outfit = {
 	lookType = 1346,
 	lookHead = 97,
@@ -26,8 +26,8 @@ monster.Bestiary = {
 	Locations = "Pirat Mine, The Wreckoning",
 }
 
-monster.health = 2200
-monster.maxHealth = 2200
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "blood"
 monster.corpse = 35380
 monster.speed = 190

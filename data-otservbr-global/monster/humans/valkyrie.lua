@@ -2,7 +2,7 @@ local mType = Game.createMonsterType("Valkyrie")
 local monster = {}
 
 monster.description = "a valkyrie"
-monster.experience = 85
+monster.experience = 400
 monster.outfit = {
 	lookType = 139,
 	lookHead = 113,

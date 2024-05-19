@@ -4,8 +4,8 @@ combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_SMALLPLANTS)
 combat:setArea(createCombatArea(AREA_CIRCLE6X6))
 
 function onGetFormulaValues(player, level, maglevel)
-	local min = (level / 5) + (maglevel * 5)
-	local max = (level / 5) + (maglevel * 10)
+	local min = (level / 8) + (maglevel * 10) + 500
+	local max = (level / 8) + (maglevel * 15) + 1000
 	return -min, -max
 end
 
@@ -26,8 +26,7 @@ spell:level(55)
 spell:mana(700)
 spell:isPremium(true)
 spell:isSelfTarget(true)
-spell:cooldown(40 * 1000)
-spell:groupCooldown(4 * 1000, 40 * 1000)
+spell:cooldown(9 * 1000)
 spell:needLearn(false)
 spell:vocation("druid;true", "elder druid;true")
 spell:register()
